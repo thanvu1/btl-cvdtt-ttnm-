@@ -28,7 +28,7 @@ class DiscountCodeSeeder extends Seeder
                 'state' => 'active',
                 'started_at' => $today,
                 'expires_at' => $expires,
-                'description' => "{$discountPercent}% giảm cho đơn hàng từ 100,000đ trở lên",
+                'description' => "{$discountPercent}% giảm cho đơn hàng từ {$minOrderValue} trở lên",
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
