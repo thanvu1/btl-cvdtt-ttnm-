@@ -31,7 +31,12 @@
                     </ul>
                 </div>
             @else
-                <a href="{{ route('login') }}" class="btn btn-light ms-2">Đăng nhập</a>
+                <a href="{{ route('login') }}" class="btn btn-light ms-2"
+                   style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; padding: 8px 20px; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
+                   onmouseover="this.style.opacity=0.7"
+                   onmouseout="this.style.opacity=1">
+                   Đăng nhập
+                </a>
             @endif
         </div>
     </div>
