@@ -56,4 +56,4 @@
 
 <!-- Offcanvas giỏ hàng -->
 
-@include('layouts.cart')
+@include('layouts.customer.cart')
