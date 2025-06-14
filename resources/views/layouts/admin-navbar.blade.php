@@ -55,7 +55,7 @@
             Sản Phẩm
         </a>
         <!-- Item 2 -->
-        <a href="#" class="admin-navbar-link">
+        <a href="{{ route('admin.discount-codes.index') }}" class="admin-navbar-link">
             <span class="admin-navbar-icon">
                 <i class="fa-solid fa-ticket"></i>
             </span>

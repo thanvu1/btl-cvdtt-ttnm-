@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiscountCodeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
         return view('Admin.index');
     })->name('Admin.home');
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('discount-codes', DiscountCodeController::class);
+        // Khi đó:
+        // admin/discount-codes        -> danh sách
+        // admin/discount-codes/create -> form thêm mới
+        // admin/discount-codes/{id}/edit -> sửa
+        // admin/discount-codes/{id}   -> show (nếu dùng)
+    });
 
     Route::get('/customer', function () {
         return view('Customer.index');
