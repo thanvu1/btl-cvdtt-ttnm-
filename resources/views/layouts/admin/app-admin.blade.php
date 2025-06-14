@@ -23,7 +23,7 @@
 </head>
 <body>
 @include('layouts.header')
-@include('layouts.admin-navbar')
+@include('layouts.admin.navbar')
 <main>
     @yield('content')
 </main>
