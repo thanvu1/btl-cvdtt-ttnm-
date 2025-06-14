@@ -41,23 +41,3 @@
         </div>
     </div>
 </div>
-<style>
-    .admin-dropdown-menu {
-        background: linear-gradient(to top, #a78bfa, #2563eb);
-        color: #fff;
-        border: none;
-        min-width: 150px;
-        padding: 0.5rem 0;
-        z-index: 4000 !important; /* Đảm bảo dropdown nổi lên trên */
-        position: absolute !important;
-    }
-    .admin-dropdown-menu .dropdown-item {
-        color: #fff;
-        transition: background 0.15s;
-    }
-    .admin-dropdown-menu .dropdown-item:hover,
-    .admin-dropdown-menu .dropdown-item:focus {
-        background: rgba(255,255,255,0.08);
-        color: #fff;
-    }
-</style>
