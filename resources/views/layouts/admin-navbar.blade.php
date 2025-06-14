@@ -44,10 +44,10 @@
         }
     }
 </style>
-
-<div class="w-100" style="height: 50px; background-color: #0284c7; overflow: hidden;">
+<div class="w-100 position-fixed" style="top: 75px; height: 50px; background-color: #0284c7; overflow: hidden; z-index: 1020;">
     <div class="d-flex align-items-center h-100 admin-navbar-list" style="padding-left: 12px;">
-        <!-- Item 1 -->
+        <!-- Các item navbar như trước -->
+         <!-- Item 1 -->
         <a href="#" class="admin-navbar-link">
             <span class="admin-navbar-icon">
                 <i class="fa-solid fa-boxes-stacked"></i>
