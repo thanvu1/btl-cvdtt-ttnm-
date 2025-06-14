@@ -17,9 +17,10 @@ return new class extends Migration
             $table->decimal('discount_amount', 10, 2);
             $table->enum('type', ['percent', 'fixed']); // phần trăm hoặc số tiền cụ thể
             $table->integer('min_order_value')->nullable();
-            $table->boolean('state')->default(false);
+            $table->enum('state', ['active', 'inactive', 'expired'])->default('inactive');
             $table->date('started_at');
             $table->date('expires_at')->nullable();
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
 
