@@ -21,9 +21,5 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             DiscountCodeSeeder::class,
         ]);
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }

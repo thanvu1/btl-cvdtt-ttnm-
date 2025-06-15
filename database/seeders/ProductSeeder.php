@@ -15,20 +15,18 @@ class ProductSeeder extends Seeder
 
         Product::insert([
             [
-                'name' => 'Paracetamol 500mg',
-                'category_id' => $thuocId,
+                'category_id' => 1,
                 'description' => 'Thuốc hạ sốt, giảm đau',
+                'name' => 'Paracetamol 500mg',
                 'price' => 15000,
-                'stock' => 100,
-                'image' => null, // có thể bỏ nếu dùng bảng product_images
+                'stock' => 100
             ],
             [
-                'name' => 'Aspirin 81mg',
-                'category_id' => $thuocId,
+                'category_id' => 1,
                 'description' => 'Chống kết tập tiểu cầu',
+                'name' => 'Aspirin 81mg',
                 'price' => 20000,
-                'stock' => 80,
-                'image' => null,
+                'stock' => 80
             ],
         ]);
     }

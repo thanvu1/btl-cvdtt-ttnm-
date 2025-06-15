@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    
+
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
@@ -20,8 +20,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->integer('stock');
-            $table->string('image_path'); // lưu đường dẫn ảnh
-            $table->boolean('is_main')->default(false); // đánh dấu ảnh chính nếu cần
             $table->timestamps();
         });
 

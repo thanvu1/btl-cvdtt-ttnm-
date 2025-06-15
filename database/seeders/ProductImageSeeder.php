@@ -17,12 +17,12 @@ class ProductImageSeeder extends Seeder
             ProductImage::insert([
                 [
                     'product_id' => $product->id,
-                    'image_path' => 'demo1.jpg',
+                    'image_path' => 'image/product.jpg',
                     'is_main' => true
                 ],
                 [
                     'product_id' => $product->id,
-                    'image_path' => 'demo2.jpg',
+                    'image_path' => 'image/Medical-Devices-Industry-2.jpg',
                     'is_main' => false
                 ],
             ]);
