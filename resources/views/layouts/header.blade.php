@@ -23,9 +23,25 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end admin-dropdown-menu" aria-labelledby="dropdownAdmin" style="background: linear-gradient(to top, #a78bfa, #2563eb);">
                         <li>
+                            <a class="dropdown-item btn btn-light" href="#"
+                               style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
+                               onmouseover="this.style.opacity=0.7"
+                               onmouseout="this.style.opacity=1">
+                                Đơn Hàng
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item btn btn-light" href="#"
+                               style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
+                               onmouseover="this.style.opacity=0.7"
+                               onmouseout="this.style.opacity=1">
+                                Lịch sử mua hàng
+                            </a>
+                        </li>
+                        <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button class="dropdown-item btn btn-light" type="submit" style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; padding: 8px 20px; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
+                                <button class="dropdown-item btn btn-light" type="submit" style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
                                         onmouseover="this.style.opacity=0.7"
                                         onmouseout="this.style.opacity=1">
                                     Đăng xuất
