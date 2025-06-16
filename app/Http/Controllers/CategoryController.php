@@ -3,25 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\ProductImage;
-use App\Models\Category;
-use App\Models\OrderItem;
-use App\Models\CartItem;
-use App\Models\DiscountCode;
-use App\Models\User;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($categoryId = null)
+    public function index()
     {
-        $categories = Category::with('products')->get();
-        // $products = Product::where('category_id', $categoryId)->get();
-
-        return view('Customer.index', compact('categories'));
+        //
     }
 
     /**

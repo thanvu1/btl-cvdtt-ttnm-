@@ -5,16 +5,39 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DiscountCode;
 
+
 class DiscountCodeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $list = DiscountCode::orderBy('updated_at', 'desc')->paginate(5);
-        return view('Admin.discount_code.index', compact('list'));
+        $query = DiscountCode::query();
+
+        // Tìm kiếm tên
+        if ($request->filled('search')) {
+            $query->where('code', 'LIKE', '%' . $request->search . '%');
+        }
+        // Lọc trạng thái
+        if ($request->has('state')) {
+            $query->whereIn('state', $request->state); // state là mảng ['active', ...]
+        }
+        // Lọc ngày bắt đầu
+        if ($request->filled('start_date')) {
+            $query->whereDate('started_at', '>=', $request->start_date);
+        }
+        // Lọc ngày kết thúc
+        if ($request->filled('end_date')) {
+            $query->whereDate('expires_at', '<=', $request->end_date);
+        }
+
+        $list = $query->orderBy('updated_at', 'desc')->paginate(8);
+
+        return view('Admin.discount_code.index', [
+            'list' => $list,
+            'request' => $request,
+        ]);
     }
 
     /**
@@ -32,6 +55,21 @@ class DiscountCodeController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            $request->validate([
+                'code' => 'required|unique:discount_codes,code',
+                'discount_amount' => 'required|numeric|min:0',
+                'type' => 'required|in:percent,fixed',
+                'min_order_value' => 'nullable|integer|min:0',
+                'state' => 'required|in:active,inactive,expired',
+                'started_at' => 'required|date',
+                'expires_at' => 'nullable|date|after_or_equal:started_at',
+                'description' => 'nullable|string',
+            ])
+        ]);
+
+        DiscountCode::create($request->all());
+        return redirect()->route('admin.discount-codes.index')->with('success', 'Tạo một mã giảm giá mới thành công!');
     }
 
     /**
@@ -48,6 +86,8 @@ class DiscountCodeController extends Controller
     public function edit(string $id)
     {
         //
+        $discountCode = DiscountCode::findOrFail($id);
+        return view('Admin.discount_code.edit', compact('discountCode'));
     }
 
     /**
@@ -56,6 +96,20 @@ class DiscountCodeController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $discountCode = DiscountCode::findOrFail($id);
+
+        $request->validate([
+            'discount_amount' => 'required|numeric|min:0',
+            'type' => 'required|in:percent,fixed',
+            'min_order_value' => 'nullable|integer|min:0',
+            'state' => 'required|in:active,inactive,expired',
+            'started_at' => 'required|date',
+            'expires_at' => 'nullable|date|after_or_equal:started_at',
+            'description' => 'nullable|string',
+        ]);
+
+        $discountCode->update($request->all());
+        return redirect()->route('admin.discount-codes.index')->with('success', 'Cập nhật mã giảm giá thành công!');
     }
 
     /**
