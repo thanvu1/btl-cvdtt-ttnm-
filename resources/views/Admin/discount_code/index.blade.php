@@ -220,5 +220,14 @@
                 document.getElementById('dateForm').submit();
             });
         });
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('dateForm');
+            document.getElementById('start_date').addEventListener('change', function () {
+                form.submit();
+            });
+            document.getElementById('end_date').addEventListener('change', function () {
+                form.submit();
+            });
+        });
     </script>
 @endsection
