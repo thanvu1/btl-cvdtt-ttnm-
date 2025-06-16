@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DiscountCodeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -39,8 +40,10 @@ Route::middleware(['auth'])->group(function () {
         return view('Customer.index');
     })->name('Customer.home');
 
-});
+    
 
+});
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
