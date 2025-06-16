@@ -1,114 +1,12 @@
-<div class="offcanvas offcanvas-end custom-cart-canvas"
-     tabindex="-1"
-     id="cartOffcanvas"
-     aria-labelledby="cartOffcanvasLabel"
-     data-bs-backdrop="false"
-     data-bs-scroll="true">
-    <div class="offcanvas-header">
-        <h3 class="offcanvas-title" id="cartOffcanvasLabel">
-            Giỏ hàng
-        </h3>
-        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Đóng"></button>
-    </div>
-    <div class="offcanvas-body custom-cart-body">
-        {{-- Kiểm tra giỏ hàng --}}
-        @php
-            // Ví dụ dữ liệu giỏ hàng, thay bằng session hoặc biến thực tế
-            $cart = [
-                [
-                    'id' => 1,
-                    'name' => 'Paracetamol',
-                    'desc' => 'Giảm đau, hạ sốt nhanh.',
-                    'image' => 'https://placehold.co/60x60?text=Paracetamol',
-                    'price' => 25000,
-                    'old_price' => 30000,
-                    'qty' => 1
-                ],
-                [
-                    'id' => 2,
-                    'name' => 'Vitamin C',
-                    'desc' => 'Tăng sức đề kháng.',
-                    'image' => 'https://placehold.co/60x60?text=Vitamin+C',
-                    'price' => 20000,
-                    'old_price' => 25000,
-                    'qty' => 2
-                ]
-            ];
-        @endphp
-
-        <div id="cart-content">
-            @if(empty($cart))
-                <p class="text-center text-muted mt-5">Chưa có sản phẩm nào trong giỏ.</p>
-            @else
-                @foreach($cart as $item)
-                <div class="cart-item d-flex align-items-center mb-3 p-2 bg-white rounded shadow-sm">
-                    <input type="checkbox" class="form-check-input me-2" style="flex-shrink:0;">
-                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="me-3 rounded" width="60" height="60">
-                    <div class="flex-grow-1">
-                        <div class="fw-bold">{{ $item['name'] }}</div>
-                        <div class="small text-muted">{{ $item['desc'] }}</div>
-                        <div>
-                            <span class="text-danger fw-bold">{{ number_format($item['price'], 0, ',', '.') }} đ</span>
-                            <span class="text-secondary text-decoration-line-through ms-2">{{ number_format($item['old_price'], 0, ',', '.') }} đ</span>
-                        </div>
-                        <div class="mt-2 d-flex align-items-center">
-                            <button class="btn btn-outline-secondary btn-sm px-2 py-0 me-1">-</button>
-                            <span class="mx-1">{{ $item['qty'] }}</span>
-                            <button class="btn btn-outline-secondary btn-sm px-2 py-0 ms-1">+</button>
-                        </div>
-                    </div>
-                    <button class="btn btn-sm btn-danger ms-3" title="Xóa sản phẩm">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-                @endforeach
-                <hr>
-                <div class="d-flex justify-content-between align-items-center fw-bold mb-3">
-                    <span>Tổng cộng</span>
-                    <span class="text-danger">
-                        {{ number_format(collect($cart)->sum(function($i){return $i['price']*$i['qty'];}), 0, ',', '.') }} đ
-                    </span>
-                </div>
-                <button class="btn btn-primary w-100">Thanh toán</button>
-            @endif
-        </div>
-    </div>
-</div>
-
-@push('styles')
-<style>
-    .offcanvas.custom-cart-canvas {
-        width: 400px !important;
-        background: #f8fafc;
-        /* border-left: 3px solid #2563eb; */
-        box-shadow: 2px 0 4px 4px rgba(0,0,0,0.18);
-        position: fixed !important;
-        top: 125px !important;
-        right: 30px !important;
-        /* border-radius: 16px 0 0 16px; */
-        height: auto !important;
-        max-height: calc(100vh - 150px) !important;
-        overflow: hidden;
-        z-index: 1056;
-    }
-    /* .custom-cart-canvas .offcanvas-header {
-        background: #2563eb;
-        color: #fff;
-        border-bottom: 1px solid #e5e7eb;
-        border-radius: 16px 0 0 0;
-    } */
-    .custom-cart-canvas .offcanvas-title {
-        font-size: 1.2rem;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-    }
-    /* .custom-cart-canvas .btn-close {
-        filter: invert(1);
-    } */
-    .custom-cart-body {
-        max-height: calc(100vh - 250px);
-        overflow-y: auto;
-        padding-bottom: 16px;
-    }
-</style>
-@endpush
+   <a href="javascript:void(0);" 
+               class="d-flex align-items-center text-white px-4 py-2 mx-2 position-relative" 
+               style="text-decoration: none;"
+               data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-cart2 me-2" viewBox="0 0 16 16" style="font-weight: bold; position: relative;">
+                    <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
+                </svg>
+                <span class="position-absolute bottom-0 end-5 translate-end badge rounded-pill bg-danger" style="font-size: 0.75rem; transform: translate(50%, 50%);">
+                    <span id="cart-count">{{ collect(session('cart', []))->sum('qty') }}</span>
+                </span>
+                <span style="font-size: 1rem;">Giỏ hàng</span>
+            </a>

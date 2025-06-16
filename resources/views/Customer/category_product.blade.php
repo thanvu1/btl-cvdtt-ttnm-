@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+
 <div class="container py-4">
     @foreach($categories as $category)
         <h2 class="mb-1">{{ $category->name }}</h2>
@@ -35,8 +36,7 @@
                             </div>
                         </div>
                         <button class="btn btn-sm btn-success add-to-cart-btn position-absolute bottom-0 end-0 m-1 d-flex align-items-center justify-content-center rounded-circle"
-                                style="width:40px; height:40px; overflow:hidden; transition:all 0.3s;"
-                                data-product-id="{{ $product->id }}">
+                                style="width:40px; height:40px; overflow:hidden; transition:all 0.3s;">
                             <i class="bi bi-cart-plus"></i>
                             <span class="add-to-cart-text ms-2" style="white-space:nowrap; opacity:0; width:0; transition:opacity 0.3s, width 0.3s;">Thêm vào giỏ</span>
                         </button>
@@ -161,59 +161,6 @@
     </div> --}}
 </div>
 @endsection
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const buttons = document.querySelectorAll('.add-to-cart-btn');
-
-    buttons.forEach(btn => {
-        btn.addEventListener('click', async function () {
-            const productId = this.getAttribute('data-product-id');
-
-            try {
-                const response = await fetch('{{ route('cart.add') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ product_id: productId })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    // Hiển thị toast hoặc thông báo
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Đã thêm vào giỏ!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    // Cập nhật số lượng giỏ nếu có hiển thị
-                    const cartCount = document.querySelector('#cart-count');
-                    if (cartCount) cartCount.innerText = result.totalQty;
-                    $('#cart-content').html(result.html);
-
-                    const offcanvasEl = document.getElementById('cartOffcanvas');
-                    const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
-                    bsOffcanvas.show();
-
-                    
-
-
-                }
-            } catch (error) {
-                console.error('Lỗi thêm giỏ:', error);
-                alert('Lỗi thêm sản phẩm!');
-            }
-        });
-    });
-});
-</script>
-@endpush
 
 {{-- Thêm đoạn CSS sau vào file hoặc trong <style> --}}
 @push('styles')
@@ -249,7 +196,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 </style>
 @endpush
-
-
-
-
