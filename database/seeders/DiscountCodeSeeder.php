@@ -18,7 +18,8 @@ class DiscountCodeSeeder extends Seeder
         for ($i = 1; $i <= 10; $i++) {
             $code = 'KM' . str_pad($i, 4, '0', STR_PAD_LEFT); // KM0001, KM0002, ..., KM0010
             $discountPercent = rand(8, 15); // số nguyên từ 8 đến 15
-            $minOrderValue = rand(100000, 500000);
+            $values = range(100000, 500000, 50000);
+            $minOrderValue = $values[array_rand($values)];
 
             $discounts[] = [
                 'code' => $code,

@@ -19,6 +19,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Thuốc hạ sốt, giảm đau',
                 'name' => 'Paracetamol 500mg',
                 'price' => 15000,
+                'country' => 'Việt Nam',
                 'stock' => 100
             ],
             [
@@ -26,6 +27,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Chống kết tập tiểu cầu',
                 'name' => 'Aspirin 81mg',
                 'price' => 20000,
+                'country' => 'Việt Nam',
                 'stock' => 80
             ],
         ]);
