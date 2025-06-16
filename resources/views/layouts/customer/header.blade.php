@@ -21,16 +21,7 @@
         </form>
         <!-- Phần admin bên phải (icon + tên user + đơn hàng + giỏ hàng) -->
         <div class="d-flex align-items-center ms-auto">
-            <!-- Đơn hàng -->
-            <a href="" class="d-flex align-items-center text-white px-4 py-2 mx-2" style="text-decoration: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-bag me-2" viewBox="0 0 16 16" style="font-weight: bold;">
-                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
-                </svg>
-                <span style="font-size: 1rem;">Đơn hàng</span>
-            </a>
-            <!-- User -->
-            <a href="" class="d-flex align-items-center px-4 py-2 mx-2">
-
+            <a href="" class="d-flex align-items-center px-4 mx-2">
                 <div class="d-flex align-items-center">
                     @if(Auth::check())
                         <div class="dropdown">
@@ -39,16 +30,19 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-person me-2" viewBox="0 0 16 16" style="font-weight: bold;">
                                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                                 </svg>
-                                <span style="font-size: 1.17rem; font-family: Inter, sans-serif; font-weight: 400;">
+                                <span style="font-size: 1rem; font-weight: 400;">
                     {{ Auth::user()->name }}
                 </span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end admin-dropdown-menu" aria-labelledby="dropdownAdmin">
+                            <ul class="dropdown-menu dropdown-menu-end admin-dropdown-menu" aria-labelledby="dropdownAdmin"
+                            style="background: linear-gradient(to top, #a78bfa, #2563eb);">
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button class="dropdown-item" type="submit"
-                                                style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;">
+                                                style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
+                                                onmouseover="this.style.opacity=0.7"
+                                                onmouseout="this.style.opacity=1">
                                             Đăng xuất</button>
                                     </form>
                                 </li>
@@ -64,6 +58,14 @@
                     @endif
                 </div>
             </a>
+            <!-- Đơn hàng -->
+            <a href="" class="d-flex align-items-center text-white px-4 py-2 mx-2" style="text-decoration: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-bag me-2" viewBox="0 0 16 16" style="font-weight: bold;">
+                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                </svg>
+                <span style="font-size: 1rem;">Đơn hàng</span>
+            </a>
+            <!-- User -->
             <!-- Giỏ hàng -->
             <a href="javascript:void(0);"
                class="d-flex align-items-center text-white px-4 py-2 mx-2 position-relative"
