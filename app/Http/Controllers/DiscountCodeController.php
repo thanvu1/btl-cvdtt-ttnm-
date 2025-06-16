@@ -5,16 +5,39 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DiscountCode;
 
+
 class DiscountCodeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $list = DiscountCode::orderBy('updated_at', 'desc')->paginate(5);
-        return view('Admin.discount_code.index', compact('list'));
+        $query = DiscountCode::query();
+
+        // Tìm kiếm tên
+        if ($request->filled('search')) {
+            $query->where('code', 'LIKE', '%' . $request->search . '%');
+        }
+        // Lọc trạng thái
+        if ($request->has('state')) {
+            $query->whereIn('state', $request->state); // state là mảng ['active', ...]
+        }
+        // Lọc ngày bắt đầu
+        if ($request->filled('start_date')) {
+            $query->whereDate('started_at', '>=', $request->start_date);
+        }
+        // Lọc ngày kết thúc
+        if ($request->filled('end_date')) {
+            $query->whereDate('expires_at', '<=', $request->end_date);
+        }
+
+        $list = $query->orderBy('updated_at', 'desc')->paginate(8);
+
+        return view('Admin.discount_code.index', [
+            'list' => $list,
+            'request' => $request,
+        ]);
     }
 
     /**

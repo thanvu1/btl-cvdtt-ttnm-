@@ -9,7 +9,7 @@
             alt="Logo"
             />
         </a>
-        
+
         <!-- Search box bên cạnh logo -->
         <form action="" method="GET" class="d-flex align-items-center mx-auto flex-grow-1" style="max-width: 400px;">
             <input type="text" name="q" class="form-control" placeholder="Tìm kiếm..." style="border-radius: 20px 0 0 20px; border: none; height: 38px;">
@@ -30,16 +30,41 @@
             </a>
             <!-- User -->
             <a href="" class="d-flex align-items-center px-4 py-2 mx-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-person me-2" viewBox="0 0 16 16" style="font-weight: bold;">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                </svg>
-                <span class="text-white" style="font-size: 1.17rem; font-family: Inter, sans-serif; font-weight: 400;">
-                    {{ Auth::user()->name ?? 'username' }}
+
+                <div class="d-flex align-items-center">
+                    @if(Auth::check())
+                        <div class="dropdown">
+                            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                               id="dropdownAdmin" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-person me-2" viewBox="0 0 16 16" style="font-weight: bold;">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                </svg>
+                                <span style="font-size: 1.17rem; font-family: Inter, sans-serif; font-weight: 400;">
+                    {{ Auth::user()->name }}
                 </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end admin-dropdown-menu" aria-labelledby="dropdownAdmin">
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button class="dropdown-item" type="submit">Đăng xuất</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-light ms-2"
+                           style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; padding: 8px 20px; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
+                           onmouseover="this.style.opacity=0.7"
+                           onmouseout="this.style.opacity=1">
+                            Đăng nhập
+                        </a>
+                    @endif
+                </div>
             </a>
             <!-- Giỏ hàng -->
-            <a href="javascript:void(0);" 
-               class="d-flex align-items-center text-white px-4 py-2 mx-2 position-relative" 
+            <a href="javascript:void(0);"
+               class="d-flex align-items-center text-white px-4 py-2 mx-2 position-relative"
                style="text-decoration: none;"
                data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-cart2 me-2" viewBox="0 0 16 16" style="font-weight: bold; position: relative;">
