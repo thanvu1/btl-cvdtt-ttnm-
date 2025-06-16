@@ -25,7 +25,11 @@
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button class="dropdown-item" type="submit" style="color: #fff; border: none; padding: 8px 20px; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;">Đăng xuất</button>
+                                <button class="dropdown-item btn btn-light" type="submit" style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; padding: 8px 20px; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;"
+                                        onmouseover="this.style.opacity=0.7"
+                                        onmouseout="this.style.opacity=1">
+                                    Đăng xuất
+                                </button>
                             </form>
                         </li>
                     </ul>
