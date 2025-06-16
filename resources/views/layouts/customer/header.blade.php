@@ -47,7 +47,9 @@
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        <button class="dropdown-item" type="submit">Đăng xuất</button>
+                                        <button class="dropdown-item" type="submit"
+                                                style="background: linear-gradient(to top, #a78bfa, #2563eb); color: #fff; border: none; padding: 8px 20px; border-radius: 7px; font-weight: 500; text-decoration: none; transition: opacity 0.2s;">
+                                            Đăng xuất</button>
                                     </form>
                                 </li>
                             </ul>

@@ -99,18 +99,33 @@
                         @endforeach
                     </form>
                     <!-- Nút thêm mới -->
-                    <a href="{{ route('admin.discount-codes.create') }}" class="btn btn-success ms-auto" style="white-space:nowrap; min-width:170px;">
+                    <a href="{{ route('admin.discount-codes.create') }}" class="btn btn-success ms-auto rounded-pill" style="white-space:nowrap; min-width:170px;">
                         <i class="fa fa-plus"></i> Thêm mã giảm giá
                     </a>
                 </div>
 
                 <!-- Thông báo -->
                 @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
+                    <div id="alert-success" class="alert" style="background: #80ff80; color: #226200; border-radius: 4px; border: none; position: relative;">
+                        <span style="font-weight: bold;">Thành công!</span><br>
                         {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <button type="button" onclick="this.parentElement.style.display='none'"
+                                style="position: absolute; right: 8px; top: 2px; background: none; border: none;
+                font-size: 1.3em; cursor: pointer; color: #226200; line-height: 1;">×</button>
                     </div>
+                    <script>
+                        setTimeout(function() {
+                            var el = document.getElementById('alert-success');
+                            if (el) {
+                                el.style.transition = 'opacity 0.5s';
+                                el.style.opacity = 0;
+                                setTimeout(function() { el.style.display = 'none'; }, 500);
+                            }
+                        }, 5000);
+                    </script>
                 @endif
+
+
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered align-middle mb-0">
                         <thead class="table-light">
@@ -122,15 +137,27 @@
                             <th>Ngày kết thúc</th>
                             <th>Mô tả</th>
                             <th>Trạng thái</th>
-                            <th class="text-end">Tác vụ</th>
+                            <th>Tác vụ</th>
                         </tr>
                         </thead>
                         <tbody>
                         @forelse ($list as $comp)
                             <tr>
                                 <td>{{ $comp->code }}</td>
-                                <td>Giảm theo phần trăm</td>
-                                <td>{{ number_format($comp->discount_amount, 2) }}%</td>
+                                <td>
+                                    @if($comp->type == 'percent')
+                                        Giảm theo phần trăm
+                                    @else
+                                        Giảm theo số tiền
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($comp->type == 'percent')
+                                        {{ number_format($comp->discount_amount, 2) }}%
+                                    @else
+                                        {{ number_format($comp->discount_amount, 0) }} đ
+                                    @endif
+                                </td>
                                 <td>{{ \Carbon\Carbon::parse($comp->started_at)->format('d/m/Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($comp->expires_at)->format('d/m/Y') }}</td>
                                 <td>{{ $comp->description }}</td>
@@ -141,7 +168,7 @@
                                         <span class="badge bg-secondary">Chưa kích hoạt</span>
                                     @endif
                                 </td>
-                                <td class="text-end">
+                                <td class="text-center">
                                     <a href="{{ route('admin.discount-codes.edit', $comp->id) }}" class="btn btn-outline-dark btn-sm" title="Sửa">
                                         <i class="fa fa-pen-to-square fa-lg"></i>
                                     </a>
@@ -194,5 +221,4 @@
             });
         });
     </script>
-
 @endsection
