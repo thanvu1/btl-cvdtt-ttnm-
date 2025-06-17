@@ -153,7 +153,7 @@
                                 </td>
                                 <td>
                                     @if($comp->type == 'percent')
-                                        {{ number_format($comp->discount_amount, 2) }}%
+                                        {{ number_format($comp->discount_amount) }}%
                                     @else
                                         {{ number_format($comp->discount_amount, 0) }} đ
                                     @endif

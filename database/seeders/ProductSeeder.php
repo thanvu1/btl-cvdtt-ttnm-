@@ -36,6 +36,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Kháng sinh phổ rộng',
                 'name' => 'Amoxicillin 500mg',
                 'price' => 25000,
+                'country' => 'Việt Nam',
                 'stock' => 60
             ],
             [
@@ -43,6 +44,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Kháng sinh điều trị nhiễm khuẩn',
                 'name' => 'Cefixime 200mg',
                 'price' => 35000,
+                'country' => 'Việt Nam',
                 'stock' => 50
             ],
             [
@@ -50,6 +52,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Giảm đau, hạ sốt, chống viêm',
                 'name' => 'Ibuprofen 400mg',
                 'price' => 18000,
+                'country' => 'Việt Nam',
                 'stock' => 70
             ],
 
@@ -59,6 +62,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Máy đo huyết áp điện tử',
                 'name' => 'Máy đo huyết áp Omron',
                 'price' => 650000,
+                'country' => 'Việt Nam',
                 'stock' => 20
             ],
             [
@@ -66,6 +70,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Nhiệt kế điện tử đo trán',
                 'name' => 'Nhiệt kế Microlife',
                 'price' => 250000,
+                'country' => 'Việt Nam',
                 'stock' => 30
             ],
             [
@@ -73,6 +78,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Máy xông mũi họng cho trẻ em',
                 'name' => 'Máy xông Omron NE-C28',
                 'price' => 900000,
+                'country' => 'Việt Nam',
                 'stock' => 10
             ],
             [
@@ -80,6 +86,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Bộ test nhanh Covid-19',
                 'name' => 'Test nhanh Humasis',
                 'price' => 70000,
+                'country' => 'Việt Nam',
                 'stock' => 100
             ],
             [
@@ -87,6 +94,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Máy đo đường huyết cá nhân',
                 'name' => 'Máy đo đường huyết Accu-Chek',
                 'price' => 550000,
+                'country' => 'Việt Nam',
                 'stock' => 15
             ],
 
@@ -96,6 +104,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Bổ sung vitamin C tăng sức đề kháng',
                 'name' => 'Vitamin C 500mg',
                 'price' => 30000,
+                'country' => 'Việt Nam',
                 'stock' => 90
             ],
             [
@@ -103,6 +112,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Bổ sung Omega 3 cho tim mạch',
                 'name' => 'Omega 3 Fish Oil',
                 'price' => 120000,
+                'country' => 'Việt Nam',
                 'stock' => 40
             ],
             [
@@ -110,6 +120,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Bổ sung canxi cho xương chắc khỏe',
                 'name' => 'Canxi D3',
                 'price' => 95000,
+                'country' => 'Việt Nam',
                 'stock' => 50
             ],
             [
@@ -117,6 +128,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Hỗ trợ làm đẹp da, tóc, móng',
                 'name' => 'Collagen Plus',
                 'price' => 150000,
+                'country' => 'Việt Nam',
                 'stock' => 35
             ],
             [
@@ -124,6 +136,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Bổ sung sắt cho phụ nữ mang thai',
                 'name' => 'Sắt hữu cơ Ferrovit',
                 'price' => 80000,
+                'country' => 'Việt Nam',
                 'stock' => 60
             ],
 
@@ -133,6 +146,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Sữa tắm dưỡng ẩm cho da',
                 'name' => 'Sữa tắm Dove',
                 'price' => 65000,
+                'country' => 'Việt Nam',
                 'stock' => 40
             ],
             [
@@ -140,6 +154,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Dầu gội sạch gàu',
                 'name' => 'Dầu gội Head & Shoulders',
                 'price' => 75000,
+                'country' => 'Việt Nam',
                 'stock' => 50
             ],
             [
@@ -147,6 +162,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Kem đánh răng ngừa sâu răng',
                 'name' => 'Kem đánh răng Sensodyne',
                 'price' => 45000,
+                'country' => 'Việt Nam',
                 'stock' => 60
             ],
             [
@@ -154,6 +170,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Lăn khử mùi nam',
                 'name' => 'Lăn khử mùi Nivea Men',
                 'price' => 55000,
+                'country' => 'Việt Nam',
                 'stock' => 30
             ],
             [
@@ -161,6 +178,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Khăn giấy ướt tiện lợi',
                 'name' => 'Khăn giấy ướt Bobby',
                 'price' => 25000,
+                'country' => 'Việt Nam',
                 'stock' => 100
             ],
 
@@ -170,6 +188,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Kem chống nắng bảo vệ da',
                 'name' => 'Kem chống nắng Anessa',
                 'price' => 350000,
+                'country' => 'Việt Nam',
                 'stock' => 25
             ],
             [
@@ -177,6 +196,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Sữa rửa mặt dịu nhẹ',
                 'name' => 'Sữa rửa mặt Cetaphil',
                 'price' => 120000,
+                'country' => 'Việt Nam',
                 'stock' => 40
             ],
             [
@@ -184,6 +204,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Kem dưỡng ẩm cho da khô',
                 'name' => 'Kem dưỡng ẩm Vaseline',
                 'price' => 90000,
+                'country' => 'Việt Nam',
                 'stock' => 35
             ],
             [
@@ -191,6 +212,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Nước tẩy trang làm sạch sâu',
                 'name' => 'Nước tẩy trang Bioderma',
                 'price' => 220000,
+                'country' => 'Việt Nam',
                 'stock' => 30
             ],
             [
@@ -198,6 +220,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Son dưỡng môi không màu',
                 'name' => 'Son dưỡng Vaseline',
                 'price' => 60000,
+                'country' => 'Việt Nam',
                 'stock' => 50
             ],
         ]);
