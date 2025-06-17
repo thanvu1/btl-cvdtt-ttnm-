@@ -6,13 +6,13 @@
             <h2 class="text-center fw-bold mb-3" style="letter-spacing: 1px;">CẬP NHẬT SẢN PHẨM</h2>
             <div class="border p-3 mb-4">
                 <div class="fw-bold mb-3" style="font-size: 1.25rem; letter-spacing: 1px;">THÔNG TIN CHUNG</div>
-                <form action="{{ route('admin.products.update', $product->id) }}" method="POST">
+                <form action="{{ route('admin.products.edit', $product->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
                         <!-- Mã sản phẩm -->
                         <div class="col-md-6 mb-3">
-                            <label for="code" class="form-label fw-bold">Mã sản phẩm <span class="text-danger">*</span></label>
+                            <label for="code" class="form-label fw-bold">Mã sản phẩm <span class="text-danger">*</span>:</label>
                             <input type="text" class="form-control" id="code" name="code" value="{{ old('code', $product->code) }}" readonly>
                             @error('code')
                             <div class="text-danger small">{{ $message }}</div>
@@ -20,7 +20,7 @@
                         </div>
                         <!-- Tên sản phẩm -->
                         <div class="col-md-6 mb-3">
-                            <label for="name" class="form-label fw-bold">Tên sản phẩm <span class="text-danger">*</span></label>
+                            <label for="name" class="form-label fw-bold">Tên sản phẩm <span class="text-danger">*</span>:</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm"
                                    value="{{ old('name', $product->name) }}">
                             @error('name')
@@ -29,7 +29,7 @@
                         </div>
                         <!-- Giá bán -->
                         <div class="col-md-6 mb-3">
-                            <label for="price" class="form-label fw-bold">Giá bán <span class="text-danger">*</span></label>
+                            <label for="price" class="form-label fw-bold">Giá bán <span class="text-danger">*</span>:</label>
                             <input type="number" class="form-control" id="price" name="price" placeholder="VD: 150000"
                                    value="{{ old('price', $product->price) }}">
                             @error('price')
@@ -38,7 +38,7 @@
                         </div>
                         <!-- Số lượng -->
                         <div class="col-md-6 mb-3">
-                            <label for="stock" class="form-label fw-bold">Số lượng <span class="text-danger">*</span></label>
+                            <label for="stock" class="form-label fw-bold">Số lượng <span class="text-danger">*</span>:</label>
                             <input type="number" class="form-control" id="stock" name="stock" placeholder="VD: 100"
                                    value="{{ old('stock', $product->stock) }}">
                             @error('stock')
@@ -47,7 +47,7 @@
                         </div>
                         <!-- Hạn sử dụng -->
                         <div class="col-md-6 mb-3">
-                            <label for="expiry_date" class="form-label fw-bold">Hạn sử dụng <span class="text-danger">*</span></label>
+                            <label for="expiry_date" class="form-label fw-bold">Hạn sử dụng <span class="text-danger">*</span>:</label>
                             <input type="date" class="form-control" id="expiry_date" name="expiry_date"
                                    value="{{ old('expiry_date', optional($product->expiry_date)->format('Y-m-d')) }}">
                             @error('expiry_date')
@@ -56,7 +56,7 @@
                         </div>
                         <!-- Mô tả -->
                         <div class="col-md-6 mb-3">
-                            <label for="description" class="form-label fw-bold">Mô tả</label>
+                            <label for="description" class="form-label fw-bold">Mô tả:</label>
                             <textarea class="form-control" id="description" name="description" rows="3" placeholder="Mô tả chi tiết">{{ old('description', $product->description) }}</textarea>
                             @error('description')
                             <div class="text-danger small">{{ $message }}</div>
@@ -64,7 +64,7 @@
                         </div>
                         <!-- Loại sản phẩm -->
                         <div class="col-md-6 mb-3">
-                            <label for="category_id" class="form-label fw-bold">Loại sản phẩm <span class="text-danger">*</span></label>
+                            <label for="category_id" class="form-label fw-bold">Loại sản phẩm <span class="text-danger">*:</span></label>
                             <select class="form-control" id="category_id" name="category_id">
                                 <option value="" disabled>-- Chọn loại --</option>
                                 @foreach($categories as $cat)
@@ -77,7 +77,7 @@
                         </div>
                         <!-- Xuất xứ -->
                         <div class="col-md-6 mb-3">
-                            <label for="country" class="form-label fw-bold">Xuất xứ <span class="text-danger">*</span></label>
+                            <label for="country" class="form-label fw-bold">Xuất xứ <span class="text-danger">*</span>:</label>
                             <input type="text" class="form-control" id="country" name="country" placeholder="VD: Việt Nam"
                                    value="{{ old('country', $product->country) }}">
                             @error('country')

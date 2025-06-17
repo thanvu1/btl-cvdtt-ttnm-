@@ -58,13 +58,10 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
-
-
 Route::prefix('admin/products')->name('admin.products.')->group(function () {
     Route::get('create', [ProductController::class, 'create'])->name('create');
-    Route::post('/', [ProductController::class, 'store'])->name('store');
-    Route::get('{id}/edit', [ProductController::class, 'edit'])->name('edit');
-    Route::put('{id}', [ProductController::class, 'update'])->name('update');
+    Route::post('', [ProductController::class, 'store'])->name('store');
 });
+Route::get('admin/products/{id}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
 
 require __DIR__.'/auth.php';
