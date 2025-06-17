@@ -20,9 +20,17 @@
             </button>
         </form>
         <!-- Phần admin bên phải (icon + tên user + đơn hàng + giỏ hàng) -->
-        <div class="d-flex align-items-center ms-auto">
-            <a href="" class="d-flex align-items-center px-4 mx-2">
-                <div class="d-flex align-items-center">
+            <!-- Đơn hàng -->
+            <a href="" class="d-flex align-items-center text-white px-4 py-2 mx-2" style="text-decoration: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-bag me-2" viewBox="0 0 16 16" style="font-weight: bold;">
+                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                </svg>
+                <span style="font-size: 1rem;">Đơn hàng</span>
+            </a>
+            <!-- User -->
+        <div class="d-flex align-items-center text-white px-4 py-2 mx-2">
+            <a href="" class="">
+                <div class="">
                     @if(Auth::check())
                         <div class="dropdown">
                             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
@@ -58,14 +66,7 @@
                     @endif
                 </div>
             </a>
-            <!-- Đơn hàng -->
-            <a href="" class="d-flex align-items-center text-white px-4 py-2 mx-2" style="text-decoration: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-bag me-2" viewBox="0 0 16 16" style="font-weight: bold;">
-                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
-                </svg>
-                <span style="font-size: 1rem;">Đơn hàng</span>
-            </a>
-            <!-- User -->
+        </div>
             <!-- Giỏ hàng -->
             @include('layouts.customer.cart')
         </div>
