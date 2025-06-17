@@ -107,7 +107,7 @@
                         <td>{{ number_format($product->price, 0, ',', '.') }} đ</td>
                         <td>{{ $product->stock }}</td>
                         <td>
-                            {{ $product->created_at ? $product->created_at->format('d/m/Y') : '' }}
+                            {{ $product->expiration_date ? \Carbon\Carbon::parse($product->expiration_date)->format('d/m/Y') : '' }}
                         </td>
                         <td class="text-center">
                             <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-outline-dark btn-sm" title="Sửa">
