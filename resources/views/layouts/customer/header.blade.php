@@ -11,8 +11,8 @@
         </a>
 
         <!-- Search box bên cạnh logo -->
-        <form action="" method="GET" class="d-flex align-items-center mx-auto flex-grow-1" style="max-width: 400px;">
-            <input type="text" name="q" class="form-control" placeholder="Tìm kiếm..." style="border-radius: 20px 0 0 20px; border: none; height: 38px;">
+        <form action="{{ route('search') }}" method="GET" class="d-flex align-items-center mx-auto flex-grow-1" style="max-width: 400px;">
+            <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm..." style="border-radius: 20px 0 0 20px; border: none; height: 38px;" value="{{ request('keyword') }}">
             <button type="submit" class="btn btn-light" style="border-radius: 0 20px 20px 0; height: 38px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.85-3.85zm-5.442 1.398a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>

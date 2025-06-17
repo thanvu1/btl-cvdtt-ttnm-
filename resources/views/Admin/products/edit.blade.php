@@ -6,18 +6,18 @@
             <h2 class="text-center fw-bold mb-3" style="letter-spacing: 1px;">CẬP NHẬT SẢN PHẨM</h2>
             <div class="border p-3 mb-4">
                 <div class="fw-bold mb-3" style="font-size: 1.25rem; letter-spacing: 1px;">THÔNG TIN CHUNG</div>
-                <form action="{{ route('admin.products.edit', $product->id) }}" method="POST">
+                <form action="{{ route('admin.products.update', $product->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <!-- Mã sản phẩm -->
+                        {{-- <!-- Mã sản phẩm -->
                         <div class="col-md-6 mb-3">
                             <label for="code" class="form-label fw-bold">Mã sản phẩm <span class="text-danger">*</span>:</label>
                             <input type="text" class="form-control" id="code" name="code" value="{{ old('code', $product->code) }}" readonly>
                             @error('code')
                             <div class="text-danger small">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
                         <!-- Tên sản phẩm -->
                         <div class="col-md-6 mb-3">
                             <label for="name" class="form-label fw-bold">Tên sản phẩm <span class="text-danger">*</span>:</label>
@@ -47,10 +47,10 @@
                         </div>
                         <!-- Hạn sử dụng -->
                         <div class="col-md-6 mb-3">
-                            <label for="expiry_date" class="form-label fw-bold">Hạn sử dụng <span class="text-danger">*</span>:</label>
-                            <input type="date" class="form-control" id="expiry_date" name="expiry_date"
-                                   value="{{ old('expiry_date', optional($product->expiry_date)->format('Y-m-d')) }}">
-                            @error('expiry_date')
+                            <label for="expiration_date" class="form-label fw-bold">Hạn sử dụng <span class="text-danger">*</span>:</label>
+                            <input type="date" class="form-control" id="expiration_date" name="expiration_date"
+                                   value="{{ old('expiration_date', optional($product->expiration_date)->format('Y-m-d')) }}">
+                            @error('expiration_date')
                             <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>

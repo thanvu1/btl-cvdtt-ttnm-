@@ -8,12 +8,7 @@ class Product extends Model
 {
     //
     protected $fillable = [
-        'name',
-        'category_id',
-        'description',
-        'country',
-        'price',
-        'stock',
+        'name', 'price', 'stock', 'expiration_date', 'category_id', 'country', 'description'
     ];
 
     public function cartItems()

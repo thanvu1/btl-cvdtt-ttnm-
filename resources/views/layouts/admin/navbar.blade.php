@@ -48,7 +48,7 @@
     <div class="d-flex align-items-center h-100 admin-navbar-list" style="padding-left: 12px;">
         <!-- Các item navbar như trước -->
          <!-- Item 1 -->
-        <a href="#" class="admin-navbar-link">
+        <a href="{{ route('admin.products.index') }}" class="admin-navbar-link">
             <span class="admin-navbar-icon">
                 <i class="fa-solid fa-boxes-stacked"></i>
             </span>
