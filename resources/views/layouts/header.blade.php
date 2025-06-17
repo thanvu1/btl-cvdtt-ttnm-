@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-<!-- <div class="w-100 fixed-top" style="height: 75px; background: linear-gradient(to top, #a78bfa, #2563eb); border-radius: 0 0 12px 12px; z-index: 1030;"> -->
-<div class="w-100 fixed-top" style="height: 75px; background: linear-gradient(to top, #a78bfa, #2563eb); overflow: hidden; z-index: 1030;">
-=======
 <div class="w-100 fixed-top" style="height: 75px; background: linear-gradient(to top, #a78bfa, #2563eb); border-radius: 0 0 12px 12px; z-index: 1030;">
->>>>>>> origin/MinhVuong
     <div class="d-flex align-items-center justify-content-between h-100 px-3">
         <img
             src="https://placehold.co/98x65"
