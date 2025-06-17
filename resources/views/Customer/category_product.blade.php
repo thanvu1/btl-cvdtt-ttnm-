@@ -1,168 +1,86 @@
 @extends('layouts.customer.app')
 
-@section('title', 'Trang chủ')
+@section('title', $category->name)
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page">Trang chủ</li>
+    <li class="breadcrumb-item"><a class="text-black text-decoration-underline" href="{{ url('/') }}">Trang chủ</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ $category->name }}</li>
 @endsection
 
 @section('content')
 
 <div class="container py-4">
-    @foreach($categories as $category)
-        <h2 class="mb-1">{{ $category->name }}</h2>
-        <hr style="border: 2px solid rgb(0, 0, 0);">
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-5 mb-4">
-            @foreach($category->products->take(5) as $product)
-                <div class="col">
-                    <div class="card h-100 position-relative" style="min-height: 350px;">
-                        <img src="{{ $product->image ?? 'https://placehold.co/200x200?text=No+Image' }}" class="card-img-top" alt="{{ $product->name }}">
-                        <div class="card-body d-flex flex-column p-3 pb-4">
-                            <h6 class="card-title mb-1 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h6>
-                            <div class="mb-2" style="min-height: 38px;">
-                                <span class="text-muted" style="font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                    {{ $product->description }}
-                                </span>
-                            </div>
-                            <div class="d-flex align-items-center mt-auto">
-                                <span class="text-danger fw-bold" style="font-size: 1.1rem;">
-                                    {{ number_format($product->price, 0, ',', '.') }} đ
-                                </span>
-                                @if(isset($product->old_price))
-                                <span class="text-secondary text-decoration-line-through ms-2" style="font-size: 1rem;">
-                                    {{ number_format($product->old_price, 0, ',', '.') }} đ
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-                        <button class="btn btn-sm btn-success add-to-cart-btn position-absolute bottom-0 end-0 m-1 d-flex align-items-center justify-content-center rounded-circle"
-                                style="width:40px; height:40px; overflow:hidden; transition:all 0.3s;">
-                            <i class="bi bi-cart-plus"></i>
-                            <span class="add-to-cart-text ms-2" style="white-space:nowrap; opacity:0; width:0; transition:opacity 0.3s, width 0.3s;">Thêm vào giỏ</span>
-                        </button>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-        <div class="text-center mb-5 mt-4">
-            <a href="{{ route('showByCategory', ['id' => $category->id]) }}" class="btn btn-primary px-4">
-                Xem thêm <i class="bi bi-chevron-double-right"></i>
-            </a>
-        </div>
-    @endforeach
-
-    {{-- Mục Thuốc --}}
-    {{-- <h2 class="mb-1">Thuốc</h2>
+    <h2 class="mb-1">{{ $category->name }}</h2>
     <hr style="border: 2px solid rgb(0, 0, 0);">
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-5">
-        @foreach($thuocs as $thuoc)
-            <div class="col">
-                <div class="card h-100 position-relative" style="min-height: 350px;">
-                    <img src="{{ $thuoc->image }}" class="card-img-top" alt="{{ $thuoc->name }}">
-                    <div class="card-body d-flex flex-column p-3 pb-4">
-                        <h6 class="card-title mb-1 text-truncate" title="{{ $thuoc->name }}">{{ $thuoc->name }}</h6>
-                        <div class="mb-2" style="min-height: 38px;">
-                            <span class="text-muted" style="font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ $thuoc->desc }}</span>
-                        </div>
-                        <div class="d-flex align-items-center mt-auto">
-                            <span class="text-danger fw-bold" style="font-size: 1.1rem;">
-                                {{ number_format($thuoc->price, 0, ',', '.') }} đ
-                            </span>
-                            <span class="text-secondary text-decoration-line-through ms-2" style="font-size: 1rem;">
-                                {{ number_format($thuoc->old_price, 0, ',', '.') }} đ
-                            </span>
-                        </div>
-                    </div>
-                    <button class="btn btn-sm btn-success add-to-cart-btn position-absolute bottom-0 end-0 m-1 d-flex align-items-center justify-content-center rounded-circle"
-                            style="width:40px; height:40px; overflow:hidden; transition:all 0.3s;">
-                        <i class="bi bi-cart-plus"></i>
-                        <span class="add-to-cart-text ms-2" style="white-space:nowrap; opacity:0; width:0; transition:opacity 0.3s, width 0.3s;">Thêm vào giỏ</span>
-                    </button>
-                </div>
-            </div>
-        @endforeach
-    </div>
-    <div class="text-center mb-5 mt-4">
-        <a href="{{ url('/thuoc') }}" class="btn btn-primary px-4">
-            Xem thêm <i class="bi bi-chevron-double-right"></i>
-        </a>
-    </div> --}}
 
-    {{-- Sản phẩm bán chạy nhất --}}
-    {{-- <h2 class="mt-5 mb-3">Sản phẩm bán chạy nhất</h2>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-5">
-        @foreach($bestSellers as $product)
-            <div class="col">
-                <div class="card h-100 position-relative" style="min-height: 370px;">
-                    <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->name }}">
-                    <div class="card-body d-flex flex-column p-3 pb-4">
-                        <h6 class="card-title mb-1 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h6>
-                        <div class="mb-2" style="min-height: 38px;">
-                            <span class="text-muted" style="font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ $product->desc }}</span>
+    <div class="row">
+        {{-- Cột trái: Bộ lọc --}}
+        <div class="col-md-3">
+            <form id="filter-form" method="GET" action="{{ route('category.show', $category->id) }}">
+                <div class="card mb-3">
+                    <div class="card-header">Lọc theo giá</div>
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="price" id="price1" value="0-100000" {{ request('price') == '0-100000' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="price1">Dưới 100.000đ</label>
                         </div>
-                        <div class="d-flex align-items-center mt-auto">
-                            <span class="text-danger fw-bold" style="font-size: 1.1rem;">
-                                {{ number_format($product->price, 0, ',', '.') }} đ
-                            </span>
-                            <span class="text-secondary text-decoration-line-through ms-2" style="font-size: 1rem;">
-                                {{ number_format($product->old_price, 0, ',', '.') }} đ
-                            </span>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="price" id="price2" value="100000-300000" {{ request('price') == '100000-300000' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="price2">100.000đ - 300.000đ</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="price" id="price3" value="300000-1000000" {{ request('price') == '300000-1000000' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="price3">Trên 300.000đ</label>
                         </div>
                     </div>
-                    <button class="btn btn-sm btn-success add-to-cart-btn position-absolute bottom-0 end-0 m-1 d-flex align-items-center justify-content-center rounded-circle"
-                            style="width:40px; height:40px; overflow:hidden; transition:all 0.3s;">
-                        <i class="bi bi-cart-plus"></i>
-                        <span class="add-to-cart-text ms-2" style="white-space:nowrap; opacity:0; width:0; transition:opacity 0.3s, width 0.3s;">Thêm vào giỏ</span>
-                    </button>
                 </div>
-            </div>
-        @endforeach
-    </div>
-    <div class="text-center mb-5 mt-4">
-        <a href="{{ url('/ban-chay') }}" class="btn btn-primary px-4">
-            Xem thêm <i class="bi bi-chevron-double-right"></i>
-        </a>
-    </div> --}}
 
-    {{-- Mục Thực phẩm chức năng --}}
-    {{-- <h2 class="mt-5 mb-3">Thực phẩm chức năng</h2>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-5">
-        @foreach($tpcns as $tp)
-            <div class="col">
-                <div class="card h-100 position-relative" style="min-height: 370px;">
-                    <img src="{{ $tp->image }}" class="card-img-top" alt="{{ $tp->name }}">
-                    <div class="card-body d-flex flex-column p-3 pb-4">
-                        <h6 class="card-title mb-1 text-truncate" title="{{ $tp->name }}">{{ $tp->name }}</h6>
-                        <div class="mb-2" style="min-height: 38px;">
-                            <span class="text-muted" style="font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ $tp->desc }}</span>
-                        </div>
-                        <div class="d-flex align-items-center mt-auto">
-                            <span class="text-danger fw-bold" style="font-size: 1.1rem;">
-                                {{ number_format($tp->price, 0, ',', '.') }} đ
-                            </span>
-                            <span class="text-secondary text-decoration-line-through ms-2" style="font-size: 1rem;">
-                                {{ number_format($tp->old_price, 0, ',', '.') }} đ
-                            </span>
+                <button type="submit" class="btn btn-primary w-100">Lọc</button>
+            </form>
+        </div>
+
+        {{-- Cột phải: Danh sách sản phẩm --}}
+        <div class="col-md-9">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+                @forelse($products as $product)
+                    <div class="col">
+                        <div class="card h-100 position-relative" style="min-height: 350px;">
+                            <img src="{{ $product->image ? asset('image/products/' . $product->image) : asset('image/Medical-Devices-Industry-2.jpg') }}" class="card-img-top" alt="{{ $product->name }}">
+                            <div class="card-body d-flex flex-column p-3 pb-4">
+                                <h6 class="card-title mb-1 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h6>
+                                <div class="mb-2" style="min-height: 38px;">
+                                    <span class="text-muted" style="font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                        {{ $product->description }}
+                                    </span>
+                                </div>
+                                <div class="d-flex align-items-center mt-auto">
+                                    <span class="text-danger fw-bold" style="font-size: 1.1rem;">
+                                        {{ number_format($product->price, 0, ',', '.') }} đ
+                                    </span>
+                                    @if(isset($product->old_price))
+                                        <span class="text-secondary text-decoration-line-through ms-2" style="font-size: 1rem;">
+                                            {{ number_format($product->old_price, 0, ',', '.') }} đ
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-success add-to-cart-btn position-absolute bottom-0 end-0 m-1 d-flex align-items-center justify-content-center rounded-circle"
+                                    style="width:40px; height:40px; overflow:hidden; transition:all 0.3s;"
+                                    data-product-id="{{ $product->id }}">
+                                <i class="bi bi-cart-plus"></i>
+                                <span class="add-to-cart-text ms-2" style="white-space:nowrap; opacity:0; width:0; transition:opacity 0.3s, width 0.3s;">Thêm vào giỏ</span>
+                            </button>
                         </div>
                     </div>
-                    <button class="btn btn-sm btn-success add-to-cart-btn position-absolute bottom-0 end-0 m-1 d-flex align-items-center justify-content-center rounded-circle"
-                            style="width:40px; height:40px; overflow:hidden; transition:all 0.3s;">
-                        <i class="bi bi-cart-plus"></i>
-                        <span class="add-to-cart-text ms-2" style="white-space:nowrap; opacity:0; width:0; transition:opacity 0.3s, width 0.3s;">Thêm vào giỏ</span>
-                    </button>
-                </div>
+                @empty
+                    <div class="col-12"><p>Không có sản phẩm nào.</p></div>
+                @endforelse
             </div>
-        @endforeach
-    </div> --}}
-    {{-- <div class="text-center mb-5 mt-4">
-        <a href="{{ url('/thuc-pham-chuc-nang') }}" class="btn btn-primary px-4">
-            Xem thêm <i class="bi bi-chevron-double-right"></i>
-        </a>
-    </div> --}}
+        </div>
+    </div>
 </div>
 @endsection
 
-{{-- Thêm đoạn CSS sau vào file hoặc trong <style> --}}
 @push('styles')
 <style>
     .add-to-cart-btn {

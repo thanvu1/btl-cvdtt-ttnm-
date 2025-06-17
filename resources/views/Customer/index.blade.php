@@ -15,7 +15,7 @@
             @foreach($category->products->take(5) as $product)
                 <div class="col">
                     <div class="card h-100 position-relative" style="min-height: 350px;">
-                        <img src="{{ $product->image ?? 'https://placehold.co/200x200?text=No+Image' }}" class="card-img-top" alt="{{ $product->name }}">
+                        <img src="{{ $product->image ? asset('image/products/' . $product->image) : asset('image/Medical-Devices-Industry-2.jpg') }}" class="card-img-top" alt="{{ $product->name }}">
                         <div class="card-body d-flex flex-column p-3 pb-4">
                             <h6 class="card-title mb-1 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h6>
                             <div class="mb-2" style="min-height: 38px;">
@@ -45,7 +45,7 @@
             @endforeach
         </div>
         <div class="text-center mb-5 mt-4">
-            <a href="{{ route('showByCategory', ['id' => $category->id]) }}" class="btn btn-primary px-4">
+            <a href="{{ route('category.show', ['id' => $category->id]) }}" class="btn btn-primary px-4">
                 Xem thêm <i class="bi bi-chevron-double-right"></i>
             </a>
         </div>

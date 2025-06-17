@@ -24,6 +24,14 @@ class ProductController extends Controller
         return view('Customer.index', compact('categories'));
     }
 
+    public function showByCategory($categoryId)
+    {
+        $category = Category::find($categoryId);
+        $products = Product::where('category_id', $categoryId)->get();
+
+        return view('Customer.category_product', compact('category', 'products'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

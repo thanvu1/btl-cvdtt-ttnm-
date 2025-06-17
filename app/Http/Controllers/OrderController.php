@@ -61,4 +61,12 @@ class OrderController extends Controller
     {
         //
     }
+    public function checkout()
+{
+    $cart = session()->get('cart', []);
+    $total = collect($cart)->sum(fn($item) => $item['price'] * $item['qty']);
+
+    return view('Customer.checkout', compact('cart', 'total'));
+}
+
 }
