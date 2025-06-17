@@ -18,18 +18,18 @@ class ProductController extends Controller
      */
     public function index($categoryId = null)
     {
-        $categories = Category::with('products')->get();
-        // $products = Product::where('category_id', $categoryId)->get();
+        // $categories = Category::with('products')->get();
+        // // $products = Product::where('category_id', $categoryId)->get();
 
-        return view('Customer.index', compact('categories'));
+        // return view('Customer.index', compact('categories'));
     }
 
     public function showByCategory($categoryId)
     {
-        $category = Category::find($categoryId);
-        $products = Product::where('category_id', $categoryId)->get();
+    //     $category = Category::find($categoryId);
+    //     $products = Product::where('category_id', $categoryId)->get();
 
-        return view('Customer.category_product', compact('category', 'products'));
+    //     return view('Customer.category_product', compact('category', 'products'));
     }
 
     /**
@@ -37,7 +37,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = \App\Models\Category::all();
+        return view('Admin.product.create', compact('categories'));
     }
 
     /**
@@ -45,7 +46,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('admin.products.create')->with('success', 'Thêm sản phẩm thành công!');
     }
 
     /**
@@ -61,7 +62,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = \App\Models\Product::findOrFail($id);
+        $categories = \App\Models\Category::all();
+        return view('Admin.product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -69,7 +72,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+    $request->validate([
+        // Không cần validate code nữa
+        'name'        => 'required|string|max:255',
+        'price'       => 'required|numeric|min:0',
+        'stock'       => 'required|integer|min:0',
+        'expiry_date' => 'nullable|date',
+        'category_id' => 'required|exists:categories,id',
+        'country'     => 'nullable|string|max:255',
+    ]);
+
+    $product->update($request->except('code'));
+    return redirect()->route('admin.products.edit', $product->id)->with('success', 'Cập nhật sản phẩm thành công!');
     }
 
     /**
