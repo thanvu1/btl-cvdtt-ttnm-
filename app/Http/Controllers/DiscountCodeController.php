@@ -56,16 +56,31 @@ class DiscountCodeController extends Controller
     {
         //
         $request->validate([
-            $request->validate([
-                'code' => 'required|unique:discount_codes,code',
-                'discount_amount' => 'required|numeric|min:0',
-                'type' => 'required|in:percent,fixed',
-                'min_order_value' => 'nullable|integer|min:0',
-                'state' => 'required|in:active,inactive,expired',
-                'started_at' => 'required|date',
-                'expires_at' => 'nullable|date|after_or_equal:started_at',
-                'description' => 'nullable|string',
-            ])
+            'code' => 'required|unique:discount_codes,code',
+            'discount_amount' => 'required|numeric|min:0',
+            'type' => 'required|in:percent,fixed',
+            'min_order_value' => 'nullable|integer|min:0',
+            'state' => 'required|in:active,inactive,expired',
+            'started_at' => 'required|date',
+            'expires_at' => 'nullable|date|after_or_equal:started_at',
+            'description' => 'nullable|string',
+        ], [
+            'code.required' => 'Mã giảm giá là bắt buộc.',
+            'code.unique' => 'Mã giảm giá đã tồn tại.',
+            'discount_amount.required' => 'Số tiền giảm giá là bắt buộc.',
+            'discount_amount.numeric' => 'Số tiền giảm giá phải là số.',
+            'discount_amount.min' => 'Số tiền giảm giá phải lớn hơn hoặc bằng 0.',
+            'type.required' => 'Loại giảm giá là bắt buộc.',
+            'type.in' => 'Loại giảm giá không hợp lệ.',
+            'min_order_value.integer' => 'Giá trị đơn hàng tối thiểu phải là số nguyên.',
+            'min_order_value.min' => 'Giá trị đơn hàng tối thiểu phải lớn hơn hoặc bằng 0.',
+            'state.required' => 'Trạng thái là bắt buộc.',
+            'state.in' => 'Trạng thái không hợp lệ.',
+            'started_at.required' => 'Ngày bắt đầu là bắt buộc.',
+            'started_at.date' => 'Ngày bắt đầu không hợp lệ.',
+            'expires_at.date' => 'Ngày hết hạn không hợp lệ.',
+            'expires_at.after_or_equal' => 'Ngày hết hạn phải sau hoặc bằng ngày bắt đầu.',
+            'description.string' => 'Mô tả phải là chuỗi ký tự.',
         ]);
 
         DiscountCode::create($request->all());
@@ -106,6 +121,9 @@ class DiscountCodeController extends Controller
             'started_at' => 'required|date',
             'expires_at' => 'nullable|date|after_or_equal:started_at',
             'description' => 'nullable|string',
+        ], [
+            'min_order_value.integer' => 'Giá trị đơn hàng tối thiểu phải là số nguyên.',
+            'min_order_value.min' => 'Giá trị đơn hàng tối thiểu phải lớn hơn hoặc bằng 0.',
         ]);
 
         $discountCode->update($request->all());
