@@ -58,6 +58,7 @@ class OrderController extends Controller
         $order->delete();
         return redirect()->route('orders.index')->with('success', 'Đã xóa đơn hàng thành công!');
     }
-
-
 }
+
+
+

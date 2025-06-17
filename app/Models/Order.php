@@ -17,4 +17,19 @@ class Order extends Model
     'phone', // thêm dòng này
     'discount_code_id',
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function discount()
+    {
+        return $this->belongsTo(DiscountCode::class);
+    }
 }
