@@ -8,7 +8,7 @@
     @foreach($cart as $id => $item)
     <div class="cart-item d-flex align-items-center mb-3 p-2 bg-white rounded shadow-sm">
         <input type="checkbox" class="form-check-input me-2" style="flex-shrink:0;">
-        <img src="{{ $item['image'] ?? 'https://placehold.co/60x60?text=No+Image' }}" alt="{{ $item['name'] }}" class="me-3 rounded" width="60" height="60">
+            <img src="{{ asset('image/Medical-Devices-Industry-2.jpg') }}" alt="{{ $item['name'] }}" class="me-3 rounded" width="60" height="60">
         <div class="flex-grow-1">
             <div class="fw-bold">{{ $item['name'] }}</div>
             <div class="small text-muted">{{ $item['desc'] ?? $item['description'] ?? '' }}</div>

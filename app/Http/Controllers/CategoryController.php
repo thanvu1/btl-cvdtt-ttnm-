@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -13,6 +15,24 @@ class CategoryController extends Controller
     {
         //
     }
+
+    public function show($id)
+    {
+        $category = Category::findOrFail($id);
+
+        $products = Product::where('category_id', $id);
+
+        // Lọc theo giá nếu có
+        if ($price = request()->price) {
+            [$min, $max] = explode('-', $price);
+            $products->whereBetween('price', [(int)$min, (int)$max]);
+        }
+
+        $products = $products->get();
+
+        return view('Customer.category_product', compact('category', 'products'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -30,17 +50,7 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //

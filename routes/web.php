@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', [ProductController::class, 'index'])
     ->name('home');
@@ -48,7 +50,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/danh-muc/{id}', [ProductController::class, 'showByCategory'])->name('showByCategory');
+Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
+
+Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
