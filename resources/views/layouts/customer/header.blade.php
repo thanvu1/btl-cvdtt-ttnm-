@@ -1,7 +1,7 @@
 <div class="w-100 fixed-top" style="height: 75px; background: linear-gradient(to top, #a78bfa, #2563eb); overflow: hidden; z-index: 1030; padding-left: 40px; padding-right: 40px;">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <!-- Logo bên trái -->
-        <a href="">
+        <a href="/">
             <img
             src="{{ asset('image/logo.png') }}"
             class="rounded-3 mt-1 "
