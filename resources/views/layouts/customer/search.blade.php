@@ -16,21 +16,65 @@
         <div class="col-md-3 mb-4">
             <form id="filter-form" method="GET" action="{{ route('search') }}">
                 <input type="hidden" name="keyword" value="{{ request('keyword') }}">
+                {{-- Mức giá --}}
                 <div class="card mb-3">
-                    <div class="card-header">Lọc theo giá</div>
+                    <div class="card-header fw-bold">Mức giá</div>
+                    <div class="card-body">
+                        @php
+                        $priceFilters = [
+                        '0-0' => 'Tất cả',
+                        '0-200000' => 'Dưới 200.000',
+                        '200000-500000' => 'Từ 200.000 - 500.000',
+                        '500000-1000000' => 'Từ 500.000 - 1 triệu',
+                        '1000000-' => 'Trên 1 triệu'
+                        ];
+                        $selectedPrice = request('price'); // vì chỉ còn 1 giá trị
+                        @endphp
+
+                        @foreach($priceFilters as $value => $label)
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="price" value="{{ $value }}" id="price_{{ $loop->index }}"
+                                   {{ $selectedPrice === $value ? 'checked' : '' }}>
+                            <label class="form-check-label" for="price_{{ $loop->index }}">{{ $label }}</label>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Tình trạng hàng --}}
+                <div class="card mb-3">
+                    <div class="card-header fw-bold">Mức giá</div>
                     <div class="card-body">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="price" id="price1" value="0-100000" {{ request('price') == '0-100000' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="price1">Dưới 100.000đ</label>
+                            <input class="form-check-input" type="radio" name="stock_status" value="all" id="stock_all"
+                                   {{ request('stock_status') === 'all' || request('stock_status') === null ? 'checked' : '' }}>
+                            <label class="form-check-label" for="stock_all">Tất cả</label>
                         </div>
+                        @foreach($stockOptions as $value => $label)
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="price" id="price2" value="100000-300000" {{ request('price') == '100000-300000' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="price2">100.000đ - 300.000đ</label>
+                            <input class="form-check-input" type="radio" name="stock_status" value="{{ $value }}" id="stock_{{ $loop->index }}"
+                                   {{ request('stock_status') === $value ? 'checked' : '' }}>
+                            <label class="form-check-label" for="stock_{{ $loop->index }}">{{ $label }}</label>
                         </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Xuất xứ --}}
+                <div class="card mb-3">
+                    <div class="card-header fw-bold">Xuất xứ</div>
+                    <div class="card-body">
+                        @php
+                        $countries = \App\Models\Product::select('country')->distinct()->whereNotNull('country')->pluck('country')->toArray();
+                        $selectedCountries = request('country', []);
+                        @endphp
+                        @foreach($countries as $country)
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="price" id="price3" value="300000-1000000" {{ request('price') == '300000-1000000' ? 'checked' : '' }}>
-                            <label class="form-check-label" for="price3">Trên 300.000đ</label>
+                            <input class="form-check-input" type="checkbox" name="country[]" value="{{ $country }}" id="country_{{ $loop->index }}"
+                                   {{ is_array($selectedCountries) && in_array($country, $selectedCountries) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="country_{{ $loop->index }}">{{ $country }}</label>
                         </div>
+                        @endforeach
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Lọc</button>

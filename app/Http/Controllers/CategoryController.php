@@ -16,22 +16,57 @@ class CategoryController extends Controller
         //
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
         $category = Category::findOrFail($id);
+        $query = Product::where('category_id', $id);
 
-        $products = Product::where('category_id', $id);
+        // Lọc theo nhiều mức giá
+        if ($request->filled('price')) {
+            $range = $request->input('price');
+            if (is_array($range)) {
+                $range = $range[0]; // lấy phần tử đầu nếu form vẫn gửi mảng
+            }
 
-        // Lọc theo giá nếu có
-        if ($price = request()->price) {
-            [$min, $max] = explode('-', $price);
-            $products->whereBetween('price', [(int)$min, (int)$max]);
+            if ($range !== '0-0') { // bỏ qua "Tất cả"
+                [$min, $max] = explode('-', $range . '-');
+                $min = (int) $min;
+                $max = $max !== '' ? (int) $max : null;
+
+                if ($max !== null) {
+                    $query->whereBetween('price', [$min, $max]);
+                } else {
+                    $query->where('price', '>=', $min);
+                }
+            }
         }
 
-        $products = $products->get();
+        // Tình trạng hàng
+        if ($request->filled('stock_status') && $request->input('stock_status') !== 'all') {
+            $status = $request->input('stock_status');
+            if ($status === 'in_stock') {
+                $query->where('stock', '>', 0);
+            } elseif ($status === 'out_of_stock') {
+                $query->where('stock', '<=', 0);
+            }
+        }
 
-        return view('Customer.category_product', compact('category', 'products'));
+        // Xuất xứ
+        if ($request->filled('country')) {
+            $countries = (array) $request->input('country');
+            $query->whereIn('country', $countries);
+        }
+
+        $products = $query->paginate(12)->appends($request->all());
+
+        $stockOptions = [
+            'in_stock' => 'Còn hàng',
+            'out_of_stock' => 'Hết hàng',
+        ];
+
+        return view('Customer.category_product', compact('category', 'products', 'stockOptions'));
     }
+
 
 
     /**

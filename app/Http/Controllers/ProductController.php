@@ -123,7 +123,11 @@ class ProductController extends Controller
 
         // Phân trang (ví dụ: 12 sản phẩm/trang)
         $products = $query->paginate(12)->appends($request->all());
+        $stockOptions = [
+            'in_stock' => 'Còn hàng',
+            'out_of_stock' => 'Hết hàng',
+        ];
 
-        return view('layouts.customer.search', compact('products', 'keyword'));
+        return view('layouts.customer.search', compact('products', 'keyword', 'stockOptions'));
     }
 }
