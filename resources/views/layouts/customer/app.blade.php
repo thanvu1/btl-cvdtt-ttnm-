@@ -35,6 +35,7 @@
     const CART_REMOVE_URL = '{{ route('cart.remove') }}';
     const CART_ADD_URL = '{{ route('cart.add') }}';
 </script>
+<script src="{{ asset('js/checkout-discount.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {{-- Xem xét bỏ nếu không cần --}}
 <script src="{{ asset('js/add-to-cart.js') }}"></script>
 <script src="{{ asset('js/cart.js') }}"></script>
@@ -43,6 +44,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/9df8154260.js" crossorigin="anonymous"></script>
 
-@stack('scripts') 
+@stack('scripts')
 </body>
 </html>

@@ -52,13 +52,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::get('/checkout', [DiscountCodeController::class, 'checkout'])->name('checkout');
 
 
 Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/checkout/calculate-discount', [DiscountCodeController::class, 'calculateDiscount'])->name('checkout.calculateDiscount');
+
 
 Route::prefix('admin/products')->name('admin.products.')->group(function () {
     Route::get('create', [ProductController::class, 'create'])->name('create');

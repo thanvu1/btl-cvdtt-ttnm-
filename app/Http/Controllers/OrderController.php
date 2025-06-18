@@ -67,31 +67,5 @@ class OrderController extends Controller
     /**
      * Trang checkout - hiển thị thông tin giỏ hàng và form đặt hàng
      */
-    public function checkout(Request $request)
-    {
 
-        $selectedIds = $request->input('selected', []); // ID sản phẩm được chọn (nếu có)
-        $cart = session()->get('cart', []);
-
-        // Nếu người dùng chọn sản phẩm cụ thể -> lọc ra, ngược lại dùng toàn bộ giỏ hàng
-        $selectedItems = $selectedIds ? collect($cart)->only($selectedIds)->toArray() : $cart;
-
-        // Tính tổng tiền
-        $total = collect($selectedItems)->sum(fn($item) => $item['price'] * $item['qty']);
-
-        // Giả lập danh sách voucher
-        $vouchers = DiscountCode::where('state', 'active')
-            ->whereDate('started_at', '<=', now())
-            ->where(function ($query) {
-                $query->whereNull('expires_at')
-                    ->orWhereDate('expires_at', '>=', now());
-            })
-            ->get();
-
-        return view('Customer.checkout', [
-            'cart' => $selectedItems,
-            'total' => $total,
-            'vouchers' => $vouchers,
-        ]);
-    }
 }
