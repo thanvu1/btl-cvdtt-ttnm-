@@ -29,7 +29,12 @@
 <main style="position: relative; top:200px">
     @yield('content')
 </main>
-
+<script>
+    const CSRF_TOKEN = '{{ csrf_token() }}';
+    const CART_UPDATE_URL = '{{ route('cart.update') }}';
+    const CART_REMOVE_URL = '{{ route('cart.remove') }}';
+    const CART_ADD_URL = '{{ route('cart.add') }}';
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {{-- Xem xét bỏ nếu không cần --}}
 <script src="{{ asset('js/add-to-cart.js') }}"></script>
 <script src="{{ asset('js/cart.js') }}"></script>
