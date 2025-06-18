@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.addEventListener('click', async function () {
             const productId = this.getAttribute('data-product-id');
 
+            // Lưu trạng thái checked của các checkbox trước khi thêm sản phẩm
+            const checkedIds = Array.from(document.querySelectorAll('.cart-checkbox:checked')).map(cb => cb.value);
+
             try {
                 const response = await fetch(CART_ADD_URL, {
                     method: 'POST',
@@ -27,6 +30,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // Cập nhật nội dung giỏ hàng
                     document.querySelector('#cart-content').innerHTML = result.html;
+
+                    // Khôi phục trạng thái checked cho các checkbox còn tồn tại
+                    checkedIds.forEach(id => {
+                        const cb = document.querySelector('.cart-checkbox[value="' + id + '"]');
+                        if (cb) cb.checked = true;
+                    });
+
+                    // Gắn lại sự kiện và cập nhật tổng giá
+                    if (typeof rebindCheckboxes === 'function') rebindCheckboxes();
+                    if (typeof updateTotalFromCheckboxes === 'function') updateTotalFromCheckboxes();
 
                     // Mở offcanvas nếu chưa mở
                     const offcanvasEl = document.getElementById('cartOffcanvas');
