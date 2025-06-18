@@ -1,13 +1,27 @@
-@extends('orders.app')
+@extends('layouts.admin.app')
 
 @section('content')
 <div class="p-6">
   <h2 class="text-lg font-semibold text-gray-700 mb-4">📦 Quản lý đơn hàng</h2>
 
   <!-- Search -->
-  <div class="flex justify-between mb-3">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
     <span class="text-sm text-gray-500">Tổng số đơn hàng: {{ $orders->count() }}</span>
-    <input type="text" placeholder="🔍 Tìm kiếm đơn hàng..." class="border px-3 py-1 rounded shadow-sm w-1/3">
+    <form method="get" class="input-group" style="width: 340px;">
+    <input type="text" class="form-control" name="search" placeholder="Nhập số điện thoại.." value="{{ request('search') }}">
+    <button class="btn btn-outline-secondary" type="submit">
+        <i class="fa fa-search"></i>
+    </button>
+    @foreach(request()->except('search', 'page') as $key => $value)
+        @if(is_array($value))
+            @foreach($value as $v)
+                <input type="hidden" name="{{ $key }}[]" value="{{ $v }}">
+            @endforeach
+        @else
+            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+        @endif
+    @endforeach
+</form>
   </div>
 
   <!-- Table -->
@@ -28,7 +42,7 @@
           <td class="px-4 py-2">{{ $order->phone }}</td>
           <td class="px-4 py-2">{{ $order->shipping_address }}</td>
           <td class="px-4 py-2">{{ $order->discount_code_id ?? 'Không có' }}</td>
-          <td class="px-4 py-2 font-bold text-green-600">{{ number_format($order->total_amount, 0, ',', '.') }} đ</td>
+          <td class="px-4 py-2 font-bold text-green-600">{{ number_format($order->total_price, 0, ',', '.') }} đ</td>
           <td class="px-4 py-2">{{ $order->created_at->format('d/m/Y H:i') }}</td>
           <td class="px-4 py-2">{{ $order->updated_at->format('d/m/Y H:i') }}</td>
           <td class="px-4 py-2 text-center">

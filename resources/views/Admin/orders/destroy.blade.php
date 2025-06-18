@@ -21,12 +21,14 @@
                 </a>
             </form>
         @else
-            <div class="text-red-600 font-semibold mb-4">
-                Không thể xóa đơn hàng này!
+            <div class="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md mb-4">
+                <strong>Lỗi:</strong> Không thể xóa đơn hàng này! Vui lòng kiểm tra điều kiện hoặc liên hệ quản trị viên.
             </div>
-            <a href="{{ route('orders.index') }}" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded inline-block">
-                Quay lại
-            </a>
+            <div class="text-center">
+                <a href="{{ route('orders.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+            ⬅ Quay lại danh sách đơn hàng
+                </a>
+            </div>
         @endif
     </div>
 </div>

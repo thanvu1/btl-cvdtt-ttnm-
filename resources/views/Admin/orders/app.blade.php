@@ -9,7 +9,7 @@
 <body class="bg-gray-100">
 
     {{--  HEADER --}}
-    @include('layouts.customer.header')
+    @include('layouts.admin.header')
 
     {{-- NAVBAR ADMIN --}}
     @include('layouts.admin.navbar')
