@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DiscountCode;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -68,6 +69,7 @@ class OrderController extends Controller
      */
     public function checkout(Request $request)
     {
+
         $selectedIds = $request->input('selected', []); // ID sản phẩm được chọn (nếu có)
         $cart = session()->get('cart', []);
 
@@ -78,12 +80,13 @@ class OrderController extends Controller
         $total = collect($selectedItems)->sum(fn($item) => $item['price'] * $item['qty']);
 
         // Giả lập danh sách voucher
-        $vouchers = [
-            (object)[ 'id' => 'KM0001', 'discount' => 10000, 'min_order' => 50000, 'expired_at' => '2025-06-30' ],
-            (object)[ 'id' => 'KM0002', 'discount' => 15000, 'min_order' => 100000, 'expired_at' => '2025-06-30' ],
-            (object)[ 'id' => 'KM0003', 'discount' => 20000, 'min_order' => 150000, 'expired_at' => '2025-06-30' ],
-            (object)[ 'id' => 'KM0004', 'discount' => 25000, 'min_order' => 200000, 'expired_at' => '2025-06-30' ],
-        ];
+        $vouchers = DiscountCode::where('state', 'active')
+            ->whereDate('started_at', '<=', now())
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                    ->orWhereDate('expires_at', '>=', now());
+            })
+            ->get();
 
         return view('Customer.checkout', [
             'cart' => $selectedItems,

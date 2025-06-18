@@ -27,6 +27,8 @@ class DiscountCode extends Model
         'expires_at' => 'date',
     ];
 
+
+
     public function orders()
     {
         return $this->hasMany(Order::class);

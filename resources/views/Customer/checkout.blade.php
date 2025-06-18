@@ -128,16 +128,16 @@
                         <div class="modal-body">
                             <div class="list-group" id="voucher-list">
                                 @foreach ($vouchers as $voucher)
-                                <label class="list-group-item d-flex align-items-center gap-3 voucher-item" style="cursor:pointer;">
-                                    <input type="radio" name="selected_voucher" value="{{ $voucher->id }}" class="form-check-input mt-0">
-                                    <img src="{{ asset('image/logo.png') }}" alt="icon" style="width: 50px; height: 50px;">
-                                    <div class="flex-grow-1">
-                                        <div class="fw-bold">Mã giảm giá {{ $voucher->code ?? $voucher->id }}</div>
-                                        <div>Giảm tối đa {{ number_format($voucher->discount, 0, ',', '.') }}đ</div>
-                                        <div>Đơn tối thiểu {{ number_format($voucher->min_order, 0, ',', '.') }}đ</div>
-                                        <div class="text-muted">HSD: {{ \Carbon\Carbon::parse($voucher->expired_at)->format('d/m/Y') }}</div>
-                                    </div>
-                                </label>
+                                    <label class="list-group-item d-flex align-items-center gap-3 voucher-item" style="cursor:pointer;">
+                                        <input type="radio" name="selected_voucher" value="{{ $voucher->id }}" class="form-check-input mt-0">
+                                        <img src="{{ asset('image/logo.png') }}" alt="icon" style="width: 50px; height: 50px;">
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold">Mã giảm giá {{ $voucher->code }}</div>
+                                            <div>Giảm tối đa {{ number_format($voucher->discount, 0, ',', '.') }}đ</div>
+                                            <div>Đơn tối thiểu {{ number_format($voucher->min_order, 0, ',', '.') }}đ</div>
+                                            <div class="text-muted">HSD: {{ \Carbon\Carbon::parse($voucher->expired_at)->format('d/m/Y') }}</div>
+                                        </div>
+                                    </label>
                                 @endforeach
                             </div>
                         </div>
@@ -263,7 +263,7 @@ select.form-select {
 /* Đặt lại vị trí modal để không bị che bởi header */
 .modal-dialog {
     margin-top: 150px !important; /* hoặc giá trị lớn hơn nếu header cao hơn */
-    
+
 }
 
 .modal {

@@ -12,10 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const response = await fetch(CART_ADD_URL, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': CSRF_TOKEN
                     },
-                    body: JSON.stringify({ product_id: productId })
+                    body: new URLSearchParams({ product_id: productId })
                 });
 
                 const result = await response.json();
