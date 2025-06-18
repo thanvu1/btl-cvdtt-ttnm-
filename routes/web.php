@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 
 Route::get('/', [ProductController::class, 'index'])
     ->name('home');
+Route::get('/search', [ProductController::class, 'search'])->name('search');
 
 Route::get('/login', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'create'])
     ->middleware('guest')
@@ -36,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
         // admin/discount-codes/create -> form thêm mới
         // admin/discount-codes/{id}/edit -> sửa
         // admin/discount-codes/{id}   -> show (nếu dùng)
+        Route::resource( 'products', ProductController::class);
     });
 
     Route::get('/customer', function () {

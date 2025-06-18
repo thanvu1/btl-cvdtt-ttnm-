@@ -21,7 +21,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Paracetamol 500mg',
                 'price' => 15000,
                 'country' => 'Việt Nam',
-                'stock' => 100
+                'stock' => 100,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thuốc'],
@@ -29,7 +30,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Aspirin 81mg',
                 'price' => 20000,
                 'country' => 'Việt Nam',
-                'stock' => 80
+                'stock' => 80,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thuốc'],
@@ -37,7 +39,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Amoxicillin 500mg',
                 'price' => 25000,
                 'country' => 'Việt Nam',
-                'stock' => 60
+                'stock' => 60,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thuốc'],
@@ -45,7 +48,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Cefixime 200mg',
                 'price' => 35000,
                 'country' => 'Việt Nam',
-                'stock' => 50
+                'stock' => 50,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thuốc'],
@@ -53,7 +57,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Ibuprofen 400mg',
                 'price' => 18000,
                 'country' => 'Việt Nam',
-                'stock' => 70
+                'stock' => 70,
+                'expiration_date' => '2026-12-31'
             ],
 
             // Thiết bị y tế
@@ -63,7 +68,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Máy đo huyết áp Omron',
                 'price' => 650000,
                 'country' => 'Việt Nam',
-                'stock' => 20
+                'stock' => 20,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thiết bị y tế'],
@@ -71,7 +77,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Nhiệt kế Microlife',
                 'price' => 250000,
                 'country' => 'Việt Nam',
-                'stock' => 30
+                'stock' => 30,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thiết bị y tế'],
@@ -79,7 +86,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Máy xông Omron NE-C28',
                 'price' => 900000,
                 'country' => 'Việt Nam',
-                'stock' => 10
+                'stock' => 10,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thiết bị y tế'],
@@ -87,7 +95,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Test nhanh Humasis',
                 'price' => 70000,
                 'country' => 'Việt Nam',
-                'stock' => 100
+                'stock' => 100,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thiết bị y tế'],
@@ -95,7 +104,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Máy đo đường huyết Accu-Chek',
                 'price' => 550000,
                 'country' => 'Việt Nam',
-                'stock' => 15
+                'stock' => 15,
+                'expiration_date' => '2026-12-31'
             ],
 
             // Thực phẩm chức năng
@@ -105,7 +115,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Vitamin C 500mg',
                 'price' => 30000,
                 'country' => 'Việt Nam',
-                'stock' => 90
+                'stock' => 90,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thực phẩm chức năng'],
@@ -113,7 +124,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Omega 3 Fish Oil',
                 'price' => 120000,
                 'country' => 'Việt Nam',
-                'stock' => 40
+                'stock' => 40,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thực phẩm chức năng'],
@@ -121,7 +133,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Canxi D3',
                 'price' => 95000,
                 'country' => 'Việt Nam',
-                'stock' => 50
+                'stock' => 50,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thực phẩm chức năng'],
@@ -129,7 +142,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Collagen Plus',
                 'price' => 150000,
                 'country' => 'Việt Nam',
-                'stock' => 35
+                'stock' => 35,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Thực phẩm chức năng'],
@@ -137,7 +151,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Sắt hữu cơ Ferrovit',
                 'price' => 80000,
                 'country' => 'Việt Nam',
-                'stock' => 60
+                'stock' => 60,
+                'expiration_date' => '2026-12-31'
             ],
 
             // Chăm sóc cá nhân
@@ -147,7 +162,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Sữa tắm Dove',
                 'price' => 65000,
                 'country' => 'Việt Nam',
-                'stock' => 40
+                'stock' => 40,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Chăm sóc cá nhân'],
@@ -155,7 +171,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Dầu gội Head & Shoulders',
                 'price' => 75000,
                 'country' => 'Việt Nam',
-                'stock' => 50
+                'stock' => 50,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Chăm sóc cá nhân'],
@@ -163,7 +180,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Kem đánh răng Sensodyne',
                 'price' => 45000,
                 'country' => 'Việt Nam',
-                'stock' => 60
+                'stock' => 60,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Chăm sóc cá nhân'],
@@ -171,7 +189,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Lăn khử mùi Nivea Men',
                 'price' => 55000,
                 'country' => 'Việt Nam',
-                'stock' => 30
+                'stock' => 30,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Chăm sóc cá nhân'],
@@ -179,7 +198,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Khăn giấy ướt Bobby',
                 'price' => 25000,
                 'country' => 'Việt Nam',
-                'stock' => 100
+                'stock' => 100,
+                'expiration_date' => '2026-12-31'
             ],
 
             // Dược-mỹ phẩm
@@ -189,7 +209,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Kem chống nắng Anessa',
                 'price' => 350000,
                 'country' => 'Việt Nam',
-                'stock' => 25
+                'stock' => 25,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Dược-mỹ phẩm'],
@@ -197,7 +218,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Sữa rửa mặt Cetaphil',
                 'price' => 120000,
                 'country' => 'Việt Nam',
-                'stock' => 40
+                'stock' => 40,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Dược-mỹ phẩm'],
@@ -205,7 +227,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Kem dưỡng ẩm Vaseline',
                 'price' => 90000,
                 'country' => 'Việt Nam',
-                'stock' => 35
+                'stock' => 35,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Dược-mỹ phẩm'],
@@ -213,7 +236,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Nước tẩy trang Bioderma',
                 'price' => 220000,
                 'country' => 'Việt Nam',
-                'stock' => 30
+                'stock' => 30,
+                'expiration_date' => '2026-12-31'
             ],
             [
                 'category_id' => $categories['Dược-mỹ phẩm'],
@@ -221,7 +245,8 @@ class ProductSeeder extends Seeder
                 'name' => 'Son dưỡng Vaseline',
                 'price' => 60000,
                 'country' => 'Việt Nam',
-                'stock' => 50
+                'stock' => 50,
+                'expiration_date' => '2026-12-31'
             ],
         ]);
     }
