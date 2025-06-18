@@ -47,10 +47,10 @@ class ProductController extends Controller
     }
     public function showByCategory($categoryId)
     {
-        $category = Category::find($categoryId);
-        $products = Product::where('category_id', $categoryId)->get();
+    //     $category = Category::find($categoryId);
+    //     $products = Product::where('category_id', $categoryId)->get();
 
-        return view('Customer.category_product', compact('category', 'products'));
+    //     return view('Customer.category_product', compact('category', 'products'));
     }
 
     /**
@@ -58,17 +58,30 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = \App\Models\Category::all();
+        return view('Admin.products.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
+{
+    $request->validate([
+        'name'        => 'required|string|max:255',
+        'price'       => 'required|numeric|min:0',
+        'stock'       => 'required|integer|min:0',
+        'expiration_date' => 'nullable|date',
+        'category_id' => 'required|exists:categories,id',
+        'country'     => 'required|string|max:255',
+        'description' => 'nullable|string',
+    ]);
 
+    // Tạo sản phẩm mới, không cần sinh mã sản phẩm
+    \App\Models\Product::create($request->all());
+
+    return redirect()->route('admin.products.index')->with('success', 'Thêm sản phẩm thành công!');
+}
     /**
      * Display the specified resource.
      */
@@ -82,23 +95,41 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = \App\Models\Product::findOrFail($id);
+        $categories = \App\Models\Category::all();
+        return view('Admin.products.edit', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-    }
+{
+    $product = Product::findOrFail($id);
+
+    $request->validate([
+        'name'        => 'required|string|max:255',
+        'price'       => 'required|numeric|min:0',
+        'stock'       => 'required|integer|min:0',
+        'expiration_date' => 'required|date',
+        'category_id' => 'required|exists:categories,id',
+        'country'     => 'required|string|max:255',
+        'description' => 'nullable|string',
+    ]);
+
+    $product->update($request->all());
+
+    return redirect()->route('admin.products.index', $product->id)->with('success', 'Cập nhật sản phẩm thành công!');
+}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $product = \App\Models\Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('admin.products.index')->with('success', 'Xoá sản phẩm thành công!');
     }
     public function search(Request $request)
     {
