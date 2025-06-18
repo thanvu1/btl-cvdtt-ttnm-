@@ -72,7 +72,8 @@ public function update(Request $request)
 
     return response()->json([
         'html' => $html,
-        'totalQty' => $totalQty
+        'totalQty' => $totalQty,
+        'cart' => $cart
     ]);
 }
 
@@ -89,7 +90,8 @@ public function remove(Request $request)
 
     return response()->json([
         'html' => $html,
-        'totalQty' => array_sum(array_column($cart, 'qty'))
+        'totalQty' => array_sum(array_column($cart, 'qty')),
+        'cảrt' => $cart
     ]);
 
 }
@@ -119,7 +121,7 @@ public function remove(Request $request)
         }
         session(['cart' => $cart]);
         $html = view('layouts.customer.cart_item', ['cart' => $cart])->render();
-        return response()->json(['success' => true,'totalQty' => array_sum(array_column($cart, 'qty')),  'html' => $html]);
+        return response()->json(['success' => true,'totalQty' => array_sum(array_column($cart, 'qty')),  'html' => $html, 'cart' => $cart]);
     }
     
 }
