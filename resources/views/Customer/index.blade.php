@@ -1,12 +1,6 @@
 @extends('layouts.customer.app')
 
 @section('title', 'Trang chủ')
-<script>
-    const CART_ADD_URL = "{{ route('cart.add') }}";
-    const CART_UPDATE_URL = "{{ route('cart.update') }}";
-    const CART_REMOVE_URL = "{{ route('cart.remove') }}";
-    const CSRF_TOKEN = "{{ csrf_token() }}";
-</script>
 
 @section('breadcrumb')
     <li class="breadcrumb-item active" aria-current="page">Trang chủ</li>
