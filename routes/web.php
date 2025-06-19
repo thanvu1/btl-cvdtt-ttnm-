@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\OrderController;
+
 
 Route::get('/', [ProductController::class, 'index'])
     ->name('home');
@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
         return view('Customer.index');
     })->name('Customer.home');
 
-    
+
 
 });
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
