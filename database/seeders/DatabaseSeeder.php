@@ -14,12 +14,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
+        \App\Models\Order::factory(10)->create();
         $this->call([
             CategorySeeder::class,
             ProductSeeder::class,
             ProductImageSeeder::class,
             UserSeeder::class,
             DiscountCodeSeeder::class,
+            
         ]);
     }
 }

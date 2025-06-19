@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DiscountCodeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +45,17 @@ Route::middleware(['auth'])->group(function () {
         return view('Customer.index');
     })->name('Customer.home');
 
+    
+
 });
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+// Hiển thị giao diện sửa (edit)
+Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+Route::get('/orders/{order}/confirm-delete', [OrderController::class, 'confirmDelete'])->name('orders.confirmDelete');
+Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+Route::get('/orders/search', [OrderController::class, 'search'])->name('orders.search');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
