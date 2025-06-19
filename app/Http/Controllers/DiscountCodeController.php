@@ -20,11 +20,14 @@ class DiscountCodeController extends Controller
     {
         $context = new DiscountCodeContext();
 
-        // Strategy tìm kiếm
-        $context->setStrategy(new SearchDiscountCodeStrategy());
-        $query = $context->execute($request);
+        // Khởi tạo query base
+        $query = DiscountCode::query();
 
-        // Strategy lọc
+        // Strategy tìm kiếm: truyền query hiện tại vào
+        $context->setStrategy(new SearchDiscountCodeStrategy());
+        $query = $context->execute($request, $query);
+
+        // Strategy lọc: truyền query hiện tại tiếp tục lọc
         $context->setStrategy(new FilterDiscountCodeStrategy());
         $query = $context->execute($request, $query);
 

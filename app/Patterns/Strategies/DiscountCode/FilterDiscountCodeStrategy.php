@@ -4,21 +4,23 @@ namespace App\Patterns\Strategies\DiscountCode;
 
 use App\Models\DiscountCode;
 
-class FilterDiscountCodeStrategy implements \App\Patterns\Strategies\DiscountCode\DiscountCodeStrategyInterface
+class FilterDiscountCodeStrategy implements DiscountCodeStrategyInterface
 {
     public function handle($request, $model = null)
     {
-        $query = DiscountCode::query();
+        $query = $model ?: DiscountCode::query();
 
-        // Lọc theo ngày
-        if ($request->filled('start_date')) {
-            $query->where('started_at', '>=', $request->start_date);
-        }
-        if ($request->filled('end_date')) {
-            $query->where('expires_at', '<=', $request->end_date);
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereDate('started_at', '=', $request->start_date)
+                    ->orWhereDate('expires_at', '=', $request->end_date);
+            });
+        } elseif ($request->filled('start_date')) {
+            $query->whereDate('started_at', '=', $request->start_date);
+        } elseif ($request->filled('end_date')) {
+            $query->whereDate('expires_at', '=', $request->end_date);
         }
 
-        // Lọc theo trạng thái
         if ($request->filled('state')) {
             $query->whereIn('state', $request->state);
         }
@@ -26,3 +28,4 @@ class FilterDiscountCodeStrategy implements \App\Patterns\Strategies\DiscountCod
         return $query;
     }
 }
+
