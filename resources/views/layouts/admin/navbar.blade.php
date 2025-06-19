@@ -62,7 +62,7 @@
             Mã Giảm Giá
         </a>
         <!-- Item 3 -->
-        <a href="#" class="admin-navbar-link">
+        <a href="{{ route('orders.index') }}" class="admin-navbar-link">
             <span class="admin-navbar-icon">
                 <i class="bi bi-receipt"></i>
             </span>

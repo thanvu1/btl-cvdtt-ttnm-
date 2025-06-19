@@ -4,7 +4,7 @@ namespace App\Patterns\Strategies\DiscountCode;
 
 use App\Models\DiscountCode;
 
-class CreateDiscountCodeStrategy implements \App\Patterns\TemplateMethod\DiscountCode\DiscountCodeStrategyInterface
+class CreateDiscountCodeStrategy implements \App\Patterns\Strategies\DiscountCode\DiscountCodeStrategyInterface
 {
     public function handle($request, $model = null)
     {

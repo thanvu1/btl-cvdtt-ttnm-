@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DiscountCode;
-use App\Patterns\Straregies\DiscountCode\DiscountCodeContext;
-use App\Patterns\Straregies\DiscountCode\CreateDiscountCodeStrategy;
-use App\Patterns\Straregies\DiscountCode\EditDiscountCodeStrategy;
-use App\Patterns\Straregies\DiscountCode\SearchDiscountCodeStrategy;
-use App\Patterns\Straregies\DiscountCode\FilterDiscountCodeStrategy;
+use App\Patterns\Strategies\DiscountCode\DiscountCodeContext;
+use App\Patterns\Strategies\DiscountCode\CreateDiscountCodeStrategy;
+use App\Patterns\Strategies\DiscountCode\EditDiscountCodeStrategy;
+use App\Patterns\Strategies\DiscountCode\SearchDiscountCodeStrategy;
+use App\Patterns\Strategies\DiscountCode\FilterDiscountCodeStrategy;
 use App\Patterns\TemplateMethod\DiscountCode\DiscountTemplateFactory;
 use App\Patterns\TemplateMethod\DiscountCode\FixedDiscount;
 use App\Patterns\TemplateMethod\DiscountCode\PercentDiscount;

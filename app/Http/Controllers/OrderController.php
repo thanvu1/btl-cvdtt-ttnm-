@@ -3,69 +3,71 @@
 namespace App\Http\Controllers;
 
 use App\Models\DiscountCode;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of orders (for admin or user history).
-     */
-    public function index()
+    // Hiển thị danh sách đơn hàng
+
+    public function index(Request $request)
     {
-        // Hiển thị danh sách đơn hàng (nếu có)
+        $query = Order::query();
+
+        // Tìm kiếm theo mã đơn hàng
+        if ($request->filled('search')) {
+            $query->where('phone', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $orders = $query->paginate(7);
+
+        return view('Admin.orders.index', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new order.
-     */
-    public function create()
+    // Nếu sau này muốn hiển thị chi tiết đơn hàng:
+    public function show($id)
     {
-        // Form tạo đơn hàng thủ công (nếu cần)
+        $order = Order::findOrFail($id);
+        return view('Admin.orders.show', compact('order'));
     }
 
-    /**
-     * Store a newly created order in storage.
-     */
-    public function store(Request $request)
+    public function edit($id)
     {
-        // Xử lý lưu đơn hàng khi người dùng bấm "Đặt hàng"
-        // Gồm thông tin người nhận + giỏ hàng + voucher (nếu có)
+        $order = Order::findOrFail($id);
+        return view('Admin.orders.edit', compact('order'));
     }
 
-    /**
-     * Display the specified order.
-     */
-    public function show(string $id)
+
+    public function updateStatus(Request $request, $id)
     {
-        // Hiển thị chi tiết một đơn hàng cụ thể
+        $request->validate([
+        'status' => 'required'
+    ]);
+        $order = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+
+        return back()->with('success', 'Cập nhật trạng thái thành công!');
     }
 
-    /**
-     * Show the form for editing the specified order.
-     */
-    public function edit(string $id)
+    public function confirmDelete($id)
     {
-        // Form cập nhật đơn hàng (cho admin)
+        $order = Order::findOrFail($id);
+        return view('Admin.orders.destroy', compact('order'));
     }
 
-    /**
-     * Update the specified order in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        // Lưu thay đổi đơn hàng
+        $order = Order::findOrFail($id);
+
+        if ($order->status !== 'GIAO THÀNH CÔNG') {
+            return redirect()->route('orders.index')->with('error', 'Không thể xóa đơn hàng!');
+        }
+
+        $order->delete();
+        return redirect()->route('orders.index')->with('success', 'Xóa đơn hàng thành công!');
     }
-
-    /**
-     * Remove the specified order from storage.
-     */
-    public function destroy(string $id)
-    {
-        // Xóa đơn hàng
-    }
-
-    /**
-     * Trang checkout - hiển thị thông tin giỏ hàng và form đặt hàng
-     */
-
 }
+
+
+
