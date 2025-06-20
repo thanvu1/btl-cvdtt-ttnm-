@@ -40,20 +40,20 @@ class OrderController extends Controller
     }
 
 
-    public function updateStatus(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
-        'status' => 'required'
-    ]);
+            'status' => 'required'
+        ]);
 
-    $order = Order::findOrFail($id);
+        $order = Order::findOrFail($id);
 
-    // Dùng Command để cập nhật trạng thái
-    $command = new UpdateOrderStatusCommand($order, $request->status);
-    $command->execute();
+        // Dùng Command Pattern nếu bạn thích (như ở updateStatus)
+        $command = new UpdateOrderStatusCommand($order, $request->status);
+        $command->execute();
 
-    return back()->with('success', 'Cập nhật trạng thái thành công!');
-}
+        return back()->with('success', 'Cập nhật trạng thái thành công!');
+    }
 
     public function confirmDelete($id)
     {

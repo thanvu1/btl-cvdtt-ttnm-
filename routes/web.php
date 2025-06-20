@@ -54,6 +54,9 @@ Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateStatus']
 Route::get('/orders/{order}/confirm-delete', [OrderController::class, 'confirmDelete'])->name('orders.confirmDelete');
 Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::get('/orders/search', [OrderController::class, 'search'])->name('orders.search');
+Route::match(['put', 'patch'], '/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+
+
 
 
 Route::middleware('auth')->group(function () {
