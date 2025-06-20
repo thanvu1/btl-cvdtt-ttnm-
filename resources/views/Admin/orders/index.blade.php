@@ -13,9 +13,14 @@
             margin-bottom: 20px;
         }
     }
+    .pagination-wrapper {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #dee2e6;
+    }
 </style>
 
-<div class="container-fluid py-3">
+<div class="container-fluid py-4">
     <div class="row justify-content-center">
         <!-- Bộ lọc bên trái -->
         <div class="col-lg-3 order-filter-col">
@@ -40,11 +45,9 @@
                             <label class="form-label">Trạng thái</label>
                             <select name="status" class="form-select form-select-sm">
                                 <option value="">Tất cả</option>
-                                <option value="Đang xử lý" {{ request('status') == 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
-                                <option value="Đã xác nhận" {{ request('status') == 'Đã xác nhận' ? 'selected' : '' }}>Đã xác nhận</option>
-                                <option value="Đã huỷ" {{ request('status') == 'Đã huỷ' ? 'selected' : '' }}>Đã huỷ</option>
-                                <option value="Đang giao" {{ request('status') == 'Đang giao' ? 'selected' : '' }}>Đang giao</option>
-                                <option value="Giao thành công" {{ request('status') == 'Giao thành công' ? 'selected' : '' }}>Giao thành công</option>
+                                @foreach(['Đang xử lý', 'Đã xác nhận', 'Đã huỷ', 'Đang giao', 'Giao thành công'] as $status)
+                                    <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>{{ $status }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -99,7 +102,12 @@
                             <td class="text-success fw-bold">{{ number_format($order->total_price, 0, ',', '.') }} đ</td>
                             <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
                             <td>
-                                <span class="badge rounded-pill {{ $order->status === 'Giao thành công' ? 'bg-success' : 'bg-warning text-dark' }}">
+                                <span class="badge rounded-pill 
+                                    @if($order->status === 'Giao thành công') bg-success 
+                                    @elseif($order->status === 'Đã huỷ') bg-danger 
+                                    @elseif($order->status === 'Đang giao') bg-primary 
+                                    @elseif($order->status === 'Đã xác nhận') bg-info 
+                                    @else bg-warning text-dark @endif">
                                     {{ $order->status }}
                                 </span>
                             </td>
@@ -125,7 +133,8 @@
                 </table>
             </div>
 
-            <div class="mt-3 d-flex justify-content-end">
+            <!-- Phân trang -->
+            <div class="pagination-wrapper d-flex justify-content-end">
                 {{ $orders->appends(request()->all())->links() }}
             </div>
         </div>
