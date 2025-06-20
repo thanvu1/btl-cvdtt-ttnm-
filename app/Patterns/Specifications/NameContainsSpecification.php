@@ -15,6 +15,6 @@ class NameContainsSpecification implements Specification
 
     public function apply(Builder $query): Builder
     {
-        return $query->where('name', 'like', "%{$this->keyword}%");
+        return $query->where('name', 'like', "{$this->keyword}%");
     }
 }

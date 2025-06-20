@@ -17,10 +17,17 @@ class AdvancedSearchStrategy implements SearchProductStrategy {
         $specs[] = new NameContainsSpecification($keyword);
     }
 
-    if (request('price') && str_contains(request('price'), '-')) {
-        [$min, $max] = explode('-', request('price'));
-        $specs[] = new PriceBetweenSpecification($min, $max);
-    }
+    // if (request('price') && str_contains(request('price'), '-')) {
+    //     [$min, $max] = explode('-', request('price'));
+    //     $specs[] = new PriceBetweenSpecification($min, $max);
+    // }
+    if (request('price') && preg_match('/^\s*(\d+)\s*-\s*(\d+)\s*$/', request('price'), $matches)) {
+    $min = (int) $matches[1];
+    $max = (int) $matches[2];
+    $specs[] = new PriceBetweenSpecification($min, $max);
+}
+
+
 
     if (request('category')) {
         $specs[] = new CategoryIsSpecification(request('category'));

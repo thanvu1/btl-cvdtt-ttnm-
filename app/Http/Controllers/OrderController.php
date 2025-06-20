@@ -6,6 +6,10 @@ use App\Models\Order;
 use App\Patterns\Commands\UpdateOrderStatusCommand;
 use App\Helpers\OrderHelper;
 use Illuminate\Http\Request;
+use App\Patterns\Strategies\OrderSearch\SearchByPhone;
+use App\Patterns\Strategies\OrderSearch\SearchByStatus;
+use App\Patterns\Chains\OrderSearchHandler;
+use App\Patterns\Strategies\OrderSearch\SearchByUserName;
 
 // Giả sử bạn có model Order
 
@@ -18,11 +22,21 @@ class OrderController extends Controller
         $query = Order::query();
 
         // Tìm kiếm theo mã đơn hàng
+        // Áp dụng Strategy + Chain of Responsibility
+        $handler = new OrderSearchHandler();
+
         if ($request->filled('search')) {
-            $query->where('phone', 'LIKE', '%' . $request->search . '%');
+            $handler->addStrategy(new SearchByPhone($request->search));
         }
 
-        $orders = $query->paginate(7);
+        if ($request->filled('status')) {
+            $handler->addStrategy(new SearchByStatus($request->status));
+        }
+        
+        if ($request->filled('username')) {
+        $handler->addStrategy(new SearchByUserName($request->username));
+        }
+        $orders = $handler->applyAll($query)->paginate(7)->appends($request->all());
 
         return view('Admin.orders.index', compact('orders'));
     }
