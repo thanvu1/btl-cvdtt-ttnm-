@@ -10,6 +10,12 @@ class EventServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
+    protected $listen = [
+        \App\Events\OrderStatusUpdated::class => [
+            \App\Listeners\LogOrderStatusUpdate::class,
+        ],
+    ];
+
     public function register(): void
     {
         //

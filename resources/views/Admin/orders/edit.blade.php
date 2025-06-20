@@ -12,7 +12,7 @@
                     {{ $order->id }}
                 </span>
             </div>
-            <form method="POST" action="{{ route('orders.update', $order->id) }}" class="d-flex align-items-center gap-3 mb-0">
+            <form method="POST" action="{{ route('orders.updateStatus', $order->id) }}" class="d-flex align-items-center gap-3 mb-0">
                 @csrf
                 @method('PUT')
                 <span class="fw-bold me-2" style="font-size:1.15rem;">{{ $order->id }}</span>
@@ -30,13 +30,15 @@
         </div>
 
         {{-- Thông báo trạng thái thay đổi --}}
-        @if(session('success'))
+        {{-- Thông báo trạng thái thay đổi (do observer đẩy lên) --}}
+        @if(session('order_status_message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="fa-solid fa-circle-check me-2"></i>
-                {{ session('success') }}
+                {{ session('order_status_message') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
             </div>
         @endif
+
 
         {{-- Form thông tin đơn hàng (không còn nút lưu, chỉ hiển thị/thay đổi các trường khác) --}}
         <form>

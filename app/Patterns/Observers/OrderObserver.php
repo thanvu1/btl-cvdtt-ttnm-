@@ -1,5 +1,7 @@
 <?php
 
+// app/Patterns/Observers/OrderObserver.php
+
 namespace App\Patterns\Observers;
 
 use App\Models\Order;
@@ -9,11 +11,12 @@ class OrderObserver
 {
     public function updated(Order $order)
     {
-        Log::info("Đơn hàng #{$order->id} đã cập nhật trạng thái: {$order->status}");
+        // In ra message trực tiếp, không cần helper
+        $message = "Đơn hàng #{$order->id} đã cập nhật trạng thái: {$order->status}";
+        Log::info($message);
 
-        // Bạn có thể thêm gửi email / notification ở đây
-        // Ví dụ:
-        // Notification::route('mail', $order->user->email)
-        //     ->notify(new OrderStatusUpdatedNotification($order));
+        // Nếu muốn truyền sang frontend, có thể ghi vào session ở đây nếu cần
+        session()->flash('order_status_message', $message);
     }
 }
+

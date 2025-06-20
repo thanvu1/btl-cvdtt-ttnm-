@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Patterns\Commands\UpdateOrderStatusCommand;
+use App\Helpers\OrderHelper;
 use Illuminate\Http\Request;
 
 // Giả sử bạn có model Order
@@ -40,20 +41,20 @@ class OrderController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function updateStatus(Request $request, $id)
     {
         $request->validate([
             'status' => 'required'
         ]);
-
         $order = Order::findOrFail($id);
 
-        // Dùng Command Pattern nếu bạn thích (như ở updateStatus)
         $command = new UpdateOrderStatusCommand($order, $request->status);
         $command->execute();
 
-        return back()->with('success', 'Cập nhật trạng thái thành công!');
+        // Không cần set session ở đây, Observer đã làm rồi
+        return back();
     }
+
 
     public function confirmDelete($id)
     {
