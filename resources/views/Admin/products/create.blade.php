@@ -17,6 +17,17 @@
                             <div class="text-danger small">{{ $message }}</div>
                             @enderror
                         </div>
+                        <!-- Thêm ở đây -->
+                        <div class="col-md-6 mb-3">
+                            <label for="type" class="form-label fw-bold">Loại sản phẩm (Factory)<span class="text-danger">*</span></label>
+                            <select name="type" id="type" class="form-control" required>
+                                <option value="medicine">Thuốc</option>
+                                <option value="equipment">Thiết bị y tế</option>
+                                <option value="supplement">Thực phẩm chức năng</option>
+                                <option value="personal_care">Chăm sóc cá nhân</option>
+                                <option value="pharmaceutical_cosmetic">Dược - Mỹ phẩm</option>
+                            </select>
+                        </div>
                         <!-- Giá bán -->
                         <div class="col-md-6 mb-3">
                             <label for="price" class="form-label fw-bold">Giá bán <span class="text-danger">*</span></label>
@@ -42,7 +53,7 @@
                             @enderror
                         </div>
                         <!-- Loại sản phẩm -->
-                        <div class="col-md-6 mb-3">
+                        {{-- <div class="col-md-6 mb-3">
                             <label for="category_id" class="form-label fw-bold">Loại sản phẩm <span class="text-danger">*</span></label>
                             <select class="form-control" id="category_id" name="category_id">
                                 <option value="" disabled {{ old('category_id') == null ? 'selected' : '' }}>-- Chọn loại --</option>
@@ -53,7 +64,7 @@
                             @error('category_id')
                             <div class="text-danger small">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
                         <!-- Xuất xứ -->
                         <div class="col-md-6 mb-3">
                             <label for="country" class="form-label fw-bold">Xuất xứ</label>

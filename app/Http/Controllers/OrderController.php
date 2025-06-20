@@ -7,8 +7,6 @@ use App\Patterns\Commands\UpdateOrderStatusCommand;
 use App\Helpers\OrderHelper;
 use Illuminate\Http\Request;
 
-// Giả sử bạn có model Order
-
 class OrderController extends Controller
 {
     // Hiển thị danh sách đơn hàng
@@ -55,7 +53,6 @@ class OrderController extends Controller
         return back();
     }
 
-
     public function confirmDelete($id)
     {
         $order = Order::findOrFail($id);
@@ -76,6 +73,5 @@ class OrderController extends Controller
 
 
 }
-
 
 

@@ -83,6 +83,13 @@
                 font-size: 1.3em; cursor: pointer; color: #226200; line-height: 1;">×</button>
             </div>
             @endif
+            <script>
+            // Nếu có phần tử id='auto-jump' thì nhảy đến nó
+                if (window.location.hash === '#success') {
+                    const el = document.getElementById('auto-jump');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }
+            </script>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered align-middle mb-0">
                     <thead class="table-light">

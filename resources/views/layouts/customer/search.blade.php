@@ -1,4 +1,4 @@
-    @extends('layouts.customer.app')
+@extends('layouts.customer.app')
 
 @section('title', 'Kết quả tìm kiếm')
 

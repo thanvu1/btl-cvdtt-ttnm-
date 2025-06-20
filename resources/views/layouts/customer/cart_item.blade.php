@@ -47,5 +47,5 @@
             </div>
 
         <button type="submit" class="btn btn-primary w-100 mt-3">Thanh toán</button>
-    </form>   
+    </form>
 @endif

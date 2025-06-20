@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Patterns\Observers\OrderObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use App\Patterns\Repository\Product\ProductRepositoryInterface;
+use App\Patterns\Repository\Product\EloquentProductRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ProductRepositoryInterface::class, EloquentProductRepository::class);
     }
 
     /**
