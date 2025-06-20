@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('total_price', 10, 2);
             $table->string('status')->default('pending'); // pending, shipping, done, canceled
             $table->string('shipping_address');
-            $table->string('phone_number', 15)->nullable();
+            $table->string('phone', 15)->nullable();
             $table->foreignId('discount_code_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });

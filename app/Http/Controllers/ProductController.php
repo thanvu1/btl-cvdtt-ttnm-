@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Patterns\Strategies\SearchProductStrategy\BasicSearchStrategy;
+use App\Patterns\Strategies\SearchProductStrategy\AdvancedSearchStrategy;
+use App\Patterns\Strategies\SearchProductStrategy\SearchProductStrategy;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -33,7 +36,7 @@ class ProductController extends Controller
             }
             if (request('search')) {
                 $search = request('search');
-                $query->where('name', 'like', "%$search%");
+                $query->where('name', 'like', "$search%");
             }
 
             $products = $query->with('category')->paginate(15)->appends(request()->all());
@@ -131,34 +134,62 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('admin.products.index')->with('success', 'Xoá sản phẩm thành công!');
     }
+
+
     public function search(Request $request)
+    
     {
-        $keyword = $request->input('keyword') ?? $request->input('q'); // Hỗ trợ cả 'q' và 'keyword'
-        $priceRange = $request->input('price');
+        // $keyword = $request->input('keyword') ?? $request->input('q'); // Hỗ trợ cả 'q' và 'keyword'
+        // $priceRange = $request->input('price');
 
-        $query = Product::query();
+        // $query = Product::query();
 
-        // Tìm theo tên hoặc mô tả
-        if (!empty($keyword)) {
-            $query->where(function($q) use ($keyword) {
-                $q->where('name', 'like', "%{$keyword}%")
-                    ->orWhere('description', 'like', "%{$keyword}%");
-            });
-        }
+        // // Tìm theo tên hoặc mô tả
+        // if (!empty($keyword)) {
+        //     $query->where(function($q) use ($keyword) {
+        //         $q->where('name', 'like', "%{$keyword}%")
+        //             ->orWhere('description', 'like', "%{$keyword}%");
+        //     });
+        // }
 
-        // Lọc theo giá nếu có
-        if (!empty($priceRange) && strpos($priceRange, '-') !== false) {
-            [$min, $max] = explode('-', $priceRange);
-            $query->whereBetween('price', [(int)$min, (int)$max]);
-        }
+        // // Lọc theo giá nếu có
+        // if (!empty($priceRange) && strpos($priceRange, '-') !== false) {
+        //     [$min, $max] = explode('-', $priceRange);
+        //     $query->whereBetween('price', [(int)$min, (int)$max]);
+        // }
 
-        // Phân trang (ví dụ: 12 sản phẩm/trang)
+        // // Phân trang (ví dụ: 12 sản phẩm/trang)
+        // $products = $query->paginate(12)->appends($request->all());
+        // $stockOptions = [
+        //     'in_stock' => 'Còn hàng',
+        //     'out_of_stock' => 'Hết hàng',
+        // ];
+
+        // return view('layouts.customer.search', compact('products', 'keyword', 'stockOptions'));
+    // Lấy keyword (có thể là 'keyword' hoặc 'q')
+        $keyword = $request->input('search') ?? $request->input('keyword') ?? $request->input('q');
+
+
+        // Chọn chiến lược tìm kiếm
+        $strategy = $request->filled('price') || $request->filled('category') || $request->filled('in_stock')
+            ? new AdvancedSearchStrategy()
+            : new BasicSearchStrategy();
+
+        // Truy vấn kết quả bằng strategy đã chọn
+        $query = $strategy->search($keyword);
+
+        // Phân trang (12 sản phẩm/trang) và giữ nguyên query string
         $products = $query->paginate(12)->appends($request->all());
+
+        // Các lựa chọn lọc kho
         $stockOptions = [
             'in_stock' => 'Còn hàng',
             'out_of_stock' => 'Hết hàng',
         ];
 
-        return view('layouts.customer.search', compact('products', 'keyword', 'stockOptions'));
-    }
+        return view('Admin.products.search-results', compact('products', 'keyword', 'stockOptions'));
+    
+    
 }
+}
+

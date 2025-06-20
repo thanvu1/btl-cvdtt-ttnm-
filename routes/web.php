@@ -78,4 +78,6 @@ Route::prefix('admin/products')->name('admin.products.')->group(function () {
 });
 
 
+Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
+
 require __DIR__.'/auth.php';
