@@ -76,6 +76,7 @@ Route::prefix('admin/products')->name('admin.products.')->group(function () {
     Route::get('create', [ProductController::class, 'create'])->name('create');
     Route::post('', [ProductController::class, 'store'])->name('store');
 });
+Route::post('/cart/undo', [CartController::class, 'undo'])->name('cart.undo');
 
 
 require __DIR__.'/auth.php';
