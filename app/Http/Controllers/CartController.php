@@ -4,135 +4,108 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Patterns\Singleton\Cart\Cart; // Assuming you have a Cart singleton pattern
+use App\Patterns\Memento\CartCaretaker; // Assuming you have a CartCaretaker for Memento pattern
+use App\Patterns\Memento\CartMemento; // Assuming you have a CartMemento
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected function backupCart()
     {
-        //
-    }
+        $cart = Cart::getInstance();
+        $currentCart = $cart->all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request)
-    {
-        $id = $request->json('id') ?? $request->input('id');
-        $action = $request->json('action') ?? $request->input('action');
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$id])) {
-            if ($action === 'increase') {
-                $cart[$id]['qty'] += 1;
-            } elseif ($action === 'decrease') {
-                $cart[$id]['qty'] = max(1, $cart[$id]['qty'] - 1);
-            }
+        // Nếu cart rỗng thì không cần backup (hoặc tùy bạn muốn vẫn lưu)
+        if (empty($currentCart)) {
+            return;
         }
 
-        session()->put('cart', $cart);
-
-        $html = view('layouts.customer.cart_item', ['cart' => $cart])->render();
-        $totalQty = array_sum(array_column($cart, 'qty'));
-
-        return response()->json([
-            'html' => $html,
-            'totalQty' => $totalQty,
-            'cart' => $cart
-        ]);
+        $memento = new CartMemento($currentCart);
+        session(['cart_backup' => $memento->getState()]);
     }
 
-
-    public function remove(Request $request)
+    public function undo()
     {
-        $id = $request->json('id') ?? $request->input('id');
-        $cart = session()->get('cart', []);
+        $cart = Cart::getInstance();
 
-        unset($cart[$id]);
-        session()->put('cart', $cart);
+        if (session()->has('cart_backup')) {
+            $memento = new CartMemento(session('cart_backup'));
+            (new CartCaretaker())->restore($cart, $memento);
 
-        $html = view('layouts.customer.cart_item', ['cart' => $cart])->render();
+            session()->forget('cart_backup'); // clear sau khi dùng
+            return redirect()->back()->with('success', 'Đã hoàn tác giỏ hàng.');
+        }
 
-        return response()->json([
-            'html' => $html,
-            'totalQty' => array_sum(array_column($cart, 'qty')),
-            'cart' => $cart
-        ]);
+        return redirect()->back()->with('error', 'Không có thay đổi nào để hoàn tác.');
     }
 
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 
     public function add(Request $request)
     {
-        // Nhận product_id từ JSON hoặc form-data
-        $product_id = $request->json('product_id') ?? $request->input('product_id');
+        $product_id = $request->input('product_id') ?? $request->json('product_id');
         if (!$product_id) {
             return response()->json(['success' => false, 'message' => 'Thiếu product_id!'], 400);
         }
 
         $product = Product::findOrFail($product_id);
+        $cart = Cart::getInstance();
+        $this->backupCart();
+        $cart->add($product->id, $product->name, $product->price, 1, $product->image);
 
-        $cart = session()->get('cart', []);
-        if(isset($cart[$product->id])) {
-            $cart[$product->id]['qty']++;
-        } else {
-            $cart[$product->id] = [
-                "name" => $product->name,
-                "price" => $product->price,
-                "image" => $product->image ?? '',
-                "qty" => 1
-            ];
-        }
-        session(['cart' => $cart]);
-        $html = view('layouts.customer.cart_item', ['cart' => $cart])->render();
         return response()->json([
             'success' => true,
-            'totalQty' => array_sum(array_column($cart, 'qty')),
-            'html' => $html,
-            'cart' => $cart
+            'totalQty' => collect($cart->all())->sum('qty'),
+            'html' => view('layouts.customer.cart_item', ['cart' => $cart->all()])->render(),
+            'cart' => $cart->all()
         ]);
     }
 
+    public function update(Request $request)
+    {
+        $id = $request->input('id') ?? $request->json('id');
+        $action = $request->input('action') ?? $request->json('action');
+
+        $cart = Cart::getInstance();
+        $items = $cart->all();
+
+        if (isset($items[$id])) {
+            $this->backupCart(); // Backup before updating
+            $currentQty = $items[$id]['qty'];
+            $newQty = $action === 'increase' ? $currentQty + 1 : max(1, $currentQty - 1);
+            $cart->update($id, $newQty);
+        }
+
+        return response()->json([
+            'html' => view('layouts.customer.cart_item', ['cart' => $cart->all()])->render(),
+            'totalQty' => collect($cart->all())->sum('qty'),
+            'cart' => $cart->all()
+        ]);
+    }
+
+    public function remove(Request $request)
+    {
+        $id = $request->input('id') ?? $request->json('id');
+        $cart = Cart::getInstance();
+        if (isset($cart->all()[$id])) {
+            $this->backupCart();
+        }
+        $cart->remove($id);
+
+        return response()->json([
+            'html' => view('layouts.customer.cart_item', ['cart' => $cart->all()])->render(),
+            'totalQty' => collect($cart->all())->sum('qty'),
+            'cart' => $cart->all()
+        ]);
+    }
+
+    public function clear()
+    {
+        $cart = Cart::getInstance();
+        $cart->clear();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Đã xóa toàn bộ giỏ hàng.',
+        ]);
+    }
 }

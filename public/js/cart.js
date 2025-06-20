@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const id = e.target.dataset.id;
             const action = e.target.dataset.action;
-
             fetch(CART_UPDATE_URL, {
                 method: 'POST',
                 headers: {

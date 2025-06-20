@@ -1,7 +1,14 @@
 @php
     $cart = session('cart', []);
 @endphp
-
+@if(session()->has('cart_backup'))
+    <form action="{{ route('cart.undo') }}" method="POST" class="mb-3">
+        @csrf
+        <button type="submit" class="btn btn-warning btn-sm rounded-pill">
+            <i class="bi bi-arrow-counterclockwise"></i> Hoàn tác thao tác gần nhất
+        </button>
+    </form>
+@endif
 @if(empty($cart))
     <p class="text-center text-muted mt-5">Chưa có sản phẩm nào trong giỏ.</p>
 @else

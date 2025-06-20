@@ -126,30 +126,18 @@
 
                         <!-- Body -->
                         <div class="modal-body">
-                            <!-- Báo lỗi khi voucher không hợp lệ -->
-                            <div id="voucher-error" style="display:none; color:#d9534f; font-weight:bold; margin: 10px 0;"></div>
-                            <!-- Loading hiệu ứng -->
-                            <div id="voucher-loading" style="display:none; color:#007bff; font-weight:bold; margin: 10px 0;">
-                                Đang kiểm tra mã giảm giá...
-                            </div>
                             <div class="list-group" id="voucher-list">
                                 @foreach ($vouchers as $voucher)
-                                    <label class="list-group-item d-flex align-items-center gap-3 voucher-item" style="cursor:pointer;">
-                                        <input type="radio" name="selected_voucher" value="{{ $voucher->id }}" class="form-check-input mt-0">
-                                        <img src="{{ asset('image/logo.png') }}" alt="icon" style="width: 50px; height: 50px;">
-                                        <div class="flex-grow-1">
-                                            <div class="fw-bold">Mã giảm giá {{ $voucher->code }}</div>
-                                            <div>
-                                                @if($voucher->type === 'percent')
-                                                    <span class="badge bg-info">Giảm {{ rtrim(rtrim($voucher->discount_amount, '0'), '.') }}%</span>
-                                                @else
-                                                    <span class="badge bg-success">Giảm {{ number_format($voucher->discount_amount, 0, ',', '.') }}đ</span>
-                                                @endif
-                                            </div>
-                                            <div>Đơn tối thiểu {{ number_format($voucher->min_order_value, 0, ',', '.') }}đ</div>
-                                            <div class="text-muted">HSD: {{ \Carbon\Carbon::parse($voucher->expires_at)->format('d/m/Y') }}</div>
-                                        </div>
-                                    </label>
+                                <label class="list-group-item d-flex align-items-center gap-3 voucher-item" style="cursor:pointer;">
+                                    <input type="radio" name="selected_voucher" value="{{ $voucher->id }}" class="form-check-input mt-0">
+                                    <img src="{{ asset('image/logo.png') }}" alt="icon" style="width: 50px; height: 50px;">
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold">Mã giảm giá {{ $voucher->code ?? $voucher->id }}</div>
+                                        <div>Giảm tối đa {{ number_format($voucher->discount, 0, ',', '.') }}đ</div>
+                                        <div>Đơn tối thiểu {{ number_format($voucher->min_order, 0, ',', '.') }}đ</div>
+                                        <div class="text-muted">HSD: {{ \Carbon\Carbon::parse($voucher->expired_at)->format('d/m/Y') }}</div>
+                                    </div>
+                                </label>
                                 @endforeach
                             </div>
                         </div>
@@ -167,18 +155,21 @@
         <ul class="list-unstyled mb-3">
             <li class="d-flex justify-content-between py-1">
                 <span>Tổng tiền</span>
-                <span id="order-total">{{ number_format($total, 0, ',', '.') }}đ</span>
+                <span>xxxxxxxxxxxxđ</span>
             </li>
             <li class="d-flex justify-content-between py-1">
                 <span>Giảm giá voucher</span>
-                <span id="discount-amount">-{{ number_format($discountAmount, 0, ',', '.') }}đ</span>
+                <span>0đ</span>
+            </li>
+            <li class="d-flex justify-content-between py-1 border-bottom">
+                <span>Phí vận chuyển</span>
+                <span>miễn phí</span>
             </li>
             <li class="d-flex justify-content-between py-2 fw-bold">
                 <span>Thành tiền</span>
-                <span id="total-after-discount">{{ number_format($totalAfterDiscount, 0, ',', '.') }}đ</span>
+                <span>xxxxxxxxxxxxđ</span>
             </li>
         </ul>
-
 
         {{-- Nút đặt hàng --}}
         <button type="submit" form="order-form" class="btn btn-primary w-100 rounded-pill fw-bold">
@@ -190,6 +181,66 @@
 </div> {{-- END container --}}
 
 @endsection
+
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const provinceSelect = document.getElementById('province');
+    const districtSelect = document.getElementById('district');
+    const wardSelect = document.getElementById('ward');
+
+    fetch('https://provinces.open-api.vn/api/?depth=3')
+        .then(res => res.json())
+        .then(data => {
+            data.forEach(province => {
+                const opt = new Option(province.name, province.code);
+                provinceSelect.add(opt);
+            });
+
+            provinceSelect.addEventListener('change', function () {
+                districtSelect.innerHTML = '<option value="">Vui lòng chọn</option>';
+                wardSelect.innerHTML = '<option value="">Vui lòng chọn</option>';
+
+                const selectedProvince = data.find(p => p.code == this.value);
+                selectedProvince?.districts.forEach(d => {
+                    const opt = new Option(d.name, d.code);
+                    districtSelect.add(opt);
+                });
+            });
+
+            districtSelect.addEventListener('change', function () {
+                wardSelect.innerHTML = '<option value="">Vui lòng chọn</option>';
+
+                const selectedProvince = data.find(p => p.code == provinceSelect.value);
+                const selectedDistrict = selectedProvince?.districts.find(d => d.code == this.value);
+                selectedDistrict?.wards.forEach(w => {
+                    const opt = new Option(w.name, w.code);
+                    wardSelect.add(opt);
+                });
+            });
+        });
+
+    // Xử lý chọn voucher
+    document.getElementById('apply-voucher-btn').addEventListener('click', function () {
+        const checked = document.querySelector('input[name="selected_voucher"]:checked');
+        if (checked) {
+            // Gán giá trị voucher vào 1 input hidden trong form nếu cần
+            let voucherInput = document.querySelector('input[name="voucher_id"]');
+            if (!voucherInput) {
+                voucherInput = document.createElement('input');
+                voucherInput.type = 'hidden';
+                voucherInput.name = 'voucher_id';
+                document.getElementById('order-form').appendChild(voucherInput);
+            }
+            voucherInput.value = checked.value;
+
+            // Có thể cập nhật lại phần giảm giá/tổng tiền bằng JS nếu muốn (AJAX)
+        }
+    });
+});
+</script>
+@endpush
 
 @push('styles')
 <style>
