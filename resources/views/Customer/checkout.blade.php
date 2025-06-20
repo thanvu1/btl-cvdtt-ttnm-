@@ -125,17 +125,28 @@
                         </div>
 
                         <!-- Body -->
-                        <div class="modal-body">
+                        <div class="modal-body">                            <!-- Báo lỗi khi voucher không hợp lệ -->
+                            <div id="voucher-error" style="display:none; color:#d9534f; font-weight:bold; margin: 10px 0;"></div>
+                            <!-- Loading hiệu ứng -->
+                            <div id="voucher-loading" style="display:none; color:#007bff; font-weight:bold; margin: 10px 0;">Add commentMore actions
+                                Đang kiểm tra mã giảm giá...
+                            </div>
                             <div class="list-group" id="voucher-list">
                                 @foreach ($vouchers as $voucher)
                                 <label class="list-group-item d-flex align-items-center gap-3 voucher-item" style="cursor:pointer;">
                                     <input type="radio" name="selected_voucher" value="{{ $voucher->id }}" class="form-check-input mt-0">
                                     <img src="{{ asset('image/logo.png') }}" alt="icon" style="width: 50px; height: 50px;">
                                     <div class="flex-grow-1">
-                                        <div class="fw-bold">Mã giảm giá {{ $voucher->code ?? $voucher->id }}</div>
-                                        <div>Giảm tối đa {{ number_format($voucher->discount, 0, ',', '.') }}đ</div>
-                                        <div>Đơn tối thiểu {{ number_format($voucher->min_order, 0, ',', '.') }}đ</div>
-                                        <div class="text-muted">HSD: {{ \Carbon\Carbon::parse($voucher->expired_at)->format('d/m/Y') }}</div>
+                                        <div class="fw-bold">Mã giảm giá {{ $voucher->code }}</div>
+                                        <div>
+                                            @if($voucher->type === 'percent')
+                                                <span class="badge bg-info">Giảm {{ rtrim(rtrim($voucher->discount_amount, '0'), '.') }}%</span>
+                                            @else
+                                                <span class="badge bg-success">Giảm {{ number_format($voucher->discount_amount, 0, ',', '.') }}đ</span>
+                                            @endif
+                                        </div>
+                                        <div>Đơn tối thiểu {{ number_format($voucher->min_order_value, 0, ',', '.') }}đ</div>
+                                        <div class="text-muted">HSD: {{ \Carbon\Carbon::parse($voucher->expires_at)->format('d/m/Y') }}</div>
                                     </div>
                                 </label>
                                 @endforeach
@@ -155,11 +166,11 @@
         <ul class="list-unstyled mb-3">
             <li class="d-flex justify-content-between py-1">
                 <span>Tổng tiền</span>
-                <span>xxxxxxxxxxxxđ</span>
+                <span id="order-total">{{ number_format($total, 0, ',', '.') }}đ</span>
             </li>
             <li class="d-flex justify-content-between py-1">
                 <span>Giảm giá voucher</span>
-                <span>0đ</span>
+                <span id="discount-amount">-{{ number_format($discountAmount, 0, ',', '.') }}đ</span>
             </li>
             <li class="d-flex justify-content-between py-1 border-bottom">
                 <span>Phí vận chuyển</span>
@@ -167,7 +178,7 @@
             </li>
             <li class="d-flex justify-content-between py-2 fw-bold">
                 <span>Thành tiền</span>
-                <span>xxxxxxxxxxxxđ</span>
+                <span id="total-after-discount">{{ number_format($totalAfterDiscount, 0, ',', '.') }}đ</span>
             </li>
         </ul>
 
