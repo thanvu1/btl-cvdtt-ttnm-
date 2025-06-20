@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 // Hiển thị giao diện sửa (edit)
 Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-Route::put('/orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.update');
 Route::get('/orders/{order}/confirm-delete', [OrderController::class, 'confirmDelete'])->name('orders.confirmDelete');
 Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::get('/orders/search', [OrderController::class, 'search'])->name('orders.search');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commands\UpdateOrderStatusCommand;
 use Illuminate\Http\Request;
 use App\Models\Order; // Giả sử bạn có model Order
 
@@ -38,16 +39,19 @@ class OrderController extends Controller
 
     
     public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
+{
+    $request->validate([
         'status' => 'required'
     ]);
-        $order = Order::findOrFail($id);
-        $order->status = $request->status;
-        $order->save();
 
-        return back()->with('success', 'Cập nhật trạng thái thành công!');
-    }
+    $order = Order::findOrFail($id);
+
+    // Dùng Command để cập nhật trạng thái
+    $command = new UpdateOrderStatusCommand($order, $request->status);
+    $command->execute();
+
+    return back()->with('success', 'Cập nhật trạng thái thành công!');
+}
 
     public function confirmDelete($id)
     {
