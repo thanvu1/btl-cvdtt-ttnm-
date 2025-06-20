@@ -15,9 +15,14 @@
         <span class="font-semibold text-black">{{ $order->id }}</span>
     </div>
 
-    <!-- Thông tin đơn hàng -->
-    <div class="flex items-center bg-white rounded-full shadow px-4 py-2 w-max gap-4">
-        <span class="font-semibold">{{ $order->id }}</span>
+    <!-- Form cập nhật trạng thái -->
+    <form action="{{ route('admin.orders.update', $order->id) }}" method="POST"
+          class="flex items-center bg-white rounded-full shadow px-4 py-2 w-max gap-4">
+        @csrf
+        @method('PUT')
+
+        <span class="font-semibold">Mã đơn: {{ $order->id }}</span>
+
         <div class="col-md-6 mb-3">
             <label for="status" class="form-label fw-bold">Trạng thái đơn hàng</label>
             <select class="form-control" id="status" name="status">
@@ -28,15 +33,18 @@
             </select>
         </div>
 
-        @if(session('success'))
-            <div class="alert alert-success mt-3">
-                {{ session('success') }}
-            </div>
-        @endif
-    </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+    </form>
+
+    <!-- Thông báo thành công -->
+    @if(session('success'))
+        <div class="alert alert-success mt-3">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <!-- Địa chỉ nhận hàng -->
-    <div class="bg-white rounded-xl shadow p-5 mb-4">
+    <div class="bg-white rounded-xl shadow p-5 my-4">
         <div class="flex items-center mb-2">
             <span class="text-2xl mr-2">📍</span>
             <span class="font-semibold text-lg">Địa chỉ nhận hàng:</span>
@@ -48,36 +56,36 @@
         </div>
     </div>
 
-    <!-- Sản phẩm -->
+    <!-- Danh sách sản phẩm -->
     @foreach($order->items as $item)
-    <div class="flex bg-white rounded-xl shadow p-5 mb-4">
-        <img src="{{ $item->product->image_url }}" alt="product" class="w-32 h-32 object-contain rounded-lg border mr-6">
-        <div class="flex-1 flex flex-col justify-between">
-            <div class="flex justify-between items-end">
-                <div class="text-sm">Số lượng: <span class="font-semibold">{{ $item->quantity }}</span></div>
-                <div class="text-right">
-                    <div class="line-through text-gray-400 text-xs">{{ number_format($item->product->price) }}₫</div>
-                    <div class="text-lg font-semibold text-black">{{ number_format($order->total_price) }}₫</div>
+        <div class="flex bg-white rounded-xl shadow p-5 mb-4">
+            <img src="{{ $item->product->image_url }}" alt="product" class="w-32 h-32 object-contain rounded-lg border mr-6">
+            <div class="flex-1 flex flex-col justify-between">
+                <div class="flex justify-between items-end">
+                    <div class="text-sm">Số lượng: <span class="font-semibold">{{ $item->quantity }}</span></div>
+                    <div class="text-right">
+                        <div class="line-through text-gray-400 text-xs">{{ number_format($item->product->price) }}₫</div>
+                        <div class="text-lg font-semibold text-black">{{ number_format($order->total_price) }}₫</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endforeach
 
-    <!-- Tổng tiền (Xổ xuống) -->
+    <!-- Chi tiết tổng tiền -->
     <div x-data="{ open: false }" class="bg-white rounded-xl shadow p-5 mb-4">
-        <!-- Nút toggle -->
         <div class="flex justify-between items-center cursor-pointer" @click="open = !open">
             <span class="font-semibold text-lg">Thành tiền:</span>
             <div class="flex items-center gap-1">
                 <span class="font-bold text-lg text-blue-700">{{ number_format($order->total_price) }}₫</span>
-                <svg :class="{'rotate-180': open}" class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                <svg :class="{'rotate-180': open}" class="w-5 h-5 transform transition-transform duration-300"
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 9l-7 7-7-7"/>
                 </svg>
             </div>
         </div>
 
-        <!-- Chi tiết -->
         <div x-show="open" x-transition class="mt-4 text-sm space-y-2">
             <div class="flex justify-between">
                 <span>Tổng tiền hàng:</span>
@@ -98,13 +106,11 @@
         </div>
     </div>
 
-    <!-- Ghi chú, mã đơn hàng, phương thức thanh toán -->
+    <!-- Ghi chú và phương thức thanh toán -->
     <div class="bg-white rounded-xl shadow p-5 mb-4">
         <div class="mb-2"><span class="font-semibold">GHI CHÚ:</span></div>
         <div class="mb-2"><span class="font-semibold">Mã đơn hàng:</span> {{ $order->id }}</div>
         <div class="mb-2"><span class="font-semibold">Phương thức thanh toán:</span> Tài khoản liên kết ngân hàng</div>
     </div>
-
-    
 </div>
 @endsection

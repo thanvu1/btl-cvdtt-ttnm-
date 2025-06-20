@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DiscountCode;
 use App\Models\Order;
+use App\Patterns\Commands\UpdateOrderStatusCommand;
 use Illuminate\Http\Request;
+
+// Giả sử bạn có model Order
 
 class OrderController extends Controller
 {
@@ -43,12 +45,15 @@ class OrderController extends Controller
         $request->validate([
         'status' => 'required'
     ]);
-        $order = Order::findOrFail($id);
-        $order->status = $request->status;
-        $order->save();
 
-        return back()->with('success', 'Cập nhật trạng thái thành công!');
-    }
+    $order = Order::findOrFail($id);
+
+    // Dùng Command để cập nhật trạng thái
+    $command = new UpdateOrderStatusCommand($order, $request->status);
+    $command->execute();
+
+    return back()->with('success', 'Cập nhật trạng thái thành công!');
+}
 
     public function confirmDelete($id)
     {
@@ -67,6 +72,8 @@ class OrderController extends Controller
         $order->delete();
         return redirect()->route('orders.index')->with('success', 'Xóa đơn hàng thành công!');
     }
+
+
 }
 
 
